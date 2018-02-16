@@ -16,7 +16,7 @@ public Monster(int type,int x, int y,int x2,int y2) {
 	HP=(int)((8+Math.pow(type, 1.4))*2);
 	posX=x;
 	posY=y;
-	looks=(char)(type+47-Base_9.ascension*10);
+	looks=(char)(type+47-Dungeon.ascension*10);
 	System.out.println("looks: "+looks);
 
 	
@@ -86,10 +86,10 @@ public int getLevel() {
 public void Attack(int playerX ,int playerY) {
 	if(playerX+1==posX || playerX-1==posX)
 		if(playerY==posY)
-			Base_9.playerHP-=Attack-rando.nextInt(Base_9.playerArmor+1);
+			Dungeon.playerHP-=Attack-rando.nextInt(Dungeon.playerArmor+1);
 	if(playerY+1==posY || playerY-1==posY)
 		if(playerX==posX)
-			Base_9.playerHP=Base_9.playerHP-Attack+rando.nextInt(Base_9.playerArmor+1);
+			Dungeon.playerHP=Dungeon.playerHP-Attack+rando.nextInt(Dungeon.playerArmor+1);
 
 }
 
