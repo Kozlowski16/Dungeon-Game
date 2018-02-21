@@ -18,40 +18,38 @@ import java.util.Random;
 public class Dungeon {
     private static Random rando = new Random();
 
-    static int playerHP = 1000, playerMaxHP = 1000, playerArmor = 1, playerAttack = 10, Arrows = 3;
+   // static int playerHP = 1000, playerMaxHP = 1000, playerArmor = 1, playerAttack = 1000, Arrows = 3;
 
      static int floor = 1;
     static int levelposX, levelposY;
-    static ArrayList<Monster> Monsters = new ArrayList<Monster>();
 
     private  static String direction;
     private static Scanner scan = new Scanner(System.in);
     private static double door1;
+    static int door2;
     private static int RoomSize = 8;
     private static int floorsize = 2;
-    static int posX, posY, posX_Old, posY_Old, door2;
+    //static int posX, posY, posX_Old, posY_Old;
     private static boolean qq;
     static int killCount;
     static int ascension;
     //4d Array.... what have I done?
     static char[][][][] LevelList = new char[floorsize][floorsize][RoomSize][RoomSize];
 
-    private  static Monster baddie;
-
     public static void main(String[] args) {
         levelposX = floorsize / 2;
         levelposY = floorsize / 2;
-        posX = RoomSize / 2;
-        posY = RoomSize / 2;
-        posX_Old = posX;
-        posY_Old = posY;
+        Player.posX = RoomSize / 2;
+        Player.posY = RoomSize / 2;
+        Player.posX_Old =  Player.posX;
+        Player.posY_Old =  Player.posY;
 
 
         generateFloor();
 
         //prints room and player
 
-        LevelList[levelposX][levelposY][posY][posX] = '@';
+        LevelList[levelposX][levelposY][ Player.posY][ Player.posX] = '@';
         printLevel(LevelList[levelposX][levelposY]);
 
 
@@ -61,60 +59,60 @@ public class Dungeon {
             if (qq)
                 break;
 
-            if (LevelList[levelposX][levelposY][posY][posX] != '#') {
+            if (LevelList[levelposX][levelposY][ Player.posY][ Player.posX] != '#') {
 
-                if (LevelList[levelposX][levelposY][posY][posX] == 'F') {
-                    playerHP += playerMaxHP * 0.1;
-                    LevelList[levelposX][levelposY][posY][posX] = ' ';
-                    if (playerHP > playerMaxHP)
-                        playerHP = playerMaxHP;
-                } else if (LevelList[levelposX][levelposY][posY][posX] == 'L') {
+                if (LevelList[levelposX][levelposY][ Player.posY][ Player.posX] == 'F') {
+                    Player.HP += Player.MaxHP * 0.1;
+                    LevelList[levelposX][levelposY][ Player.posY][ Player.posX] = ' ';
+                    if (Player.HP > Player.MaxHP)
+                        Player.HP = Player.MaxHP;
+                } else if (LevelList[levelposX][levelposY][ Player.posY][ Player.posX] == 'L') {
                     floor++;
-                    LevelList[levelposX][levelposY][posY][posX] = ' ';
+                    LevelList[levelposX][levelposY][ Player.posY][ Player.posX] = ' ';
                     generateFloor();
-                } else if (LevelList[levelposX][levelposY][posY][posX] == 'A') {
-                    playerAttack += floor;
-                    LevelList[levelposX][levelposY][posY][posX] = ' ';
-                } else if (LevelList[levelposX][levelposY][posY][posX] == '>') {
-                    Arrows += 3;
-                    LevelList[levelposX][levelposY][posY][posX] = ' ';
-                } else if (LevelList[levelposX][levelposY][posY][posX] == 'D') {
-                    playerArmor++;
-                    LevelList[levelposX][levelposY][posY][posX] = ' ';
+                } else if (LevelList[levelposX][levelposY][ Player.posY][ Player.posX] == 'A') {
+                    Player.Attack += floor;
+                    LevelList[levelposX][levelposY][ Player.posY][ Player.posX] = ' ';
+                } else if (LevelList[levelposX][levelposY][ Player.posY][ Player.posX] == '>') {
+                    Player. Arrows += 3;
+                    LevelList[levelposX][levelposY][ Player.posY][ Player.posX] = ' ';
+                } else if (LevelList[levelposX][levelposY][ Player.posY][ Player.posX] == 'D') {
+                    Player.Armor++;
+                    LevelList[levelposX][levelposY][ Player.posY][ Player.posX] = ' ';
                 }
+                Monster_list.attackMonster( Player.posY,  Player.posX);
+                //attackMonster(posY, posX);
 
-                attackMonster(posY, posX);
-
-                LevelList[levelposX][levelposY][posY_Old][posX_Old] = ' ';
-                posX_Old = posX;
-                posY_Old = posY;
+                LevelList[levelposX][levelposY][ Player.posY_Old][ Player.posX_Old] = ' ';
+                Player.posX_Old =  Player.posX;
+                Player.posY_Old =  Player.posY;
             } else {
                 System.out.println("You cant move into a wall");
-                posY = posY_Old;
-                posX = posX_Old;
+                Player. posY =  Player.posY_Old;
+                Player.posX = Player. posX_Old;
             }
 
             //marks position of character
-            LevelList[levelposX][levelposY][posY][posX] = '@';
+            LevelList[levelposX][levelposY][ Player.posY][ Player.posX] = '@';
 
 
             Monster_list.runMonsters();
 
 
-            for (Monster baddie : Monsters) {
-                //System.out.println("hp: "+ baddie.HP);
-                //System.out.println("attack: "+ baddie.Attack);
-                baddie.Attack(posX, posY);
-                LevelList[levelposX][levelposY][baddie.getY()][baddie.getX()] = ' ';
-                baddie.move(posX, posY);
-                if (LevelList[levelposX][levelposY][baddie.getY()][baddie.getX()] == ' ')
-                    LevelList[levelposX][levelposY][baddie.getY()][baddie.getX()] = baddie.looks;
-                else {
-                    baddie.unMove();
-                    LevelList[levelposX][levelposY][baddie.getY()][baddie.getX()] = baddie.looks;
-                }
-
-            }
+//            for (Monster baddie : Monsters) {
+//                //System.out.println("hp: "+ baddie.HP);
+//                //System.out.println("attack: "+ baddie.Attack);
+//                baddie.Attack(posX, posY);
+//                LevelList[levelposX][levelposY][baddie.getY()][baddie.getX()] = ' ';
+//                baddie.move(posX, posY);
+//                if (LevelList[levelposX][levelposY][baddie.getY()][baddie.getX()] == ' ')
+//                    LevelList[levelposX][levelposY][baddie.getY()][baddie.getX()] = baddie.looks;
+//                else {
+//                    baddie.unMove();
+//                    LevelList[levelposX][levelposY][baddie.getY()][baddie.getX()] = baddie.looks;
+//                }
+//
+//            }
             if (isDead())
                 break;
             //System.out.println('posY: ' + posY + ' posX: ' + posX);
@@ -129,7 +127,7 @@ public class Dungeon {
     }
 
     private static void printLevel(char[][] a) {
-        System.out.println("HP:" + playerHP + '/' + playerMaxHP + " Attack:" + playerAttack + " Armor: " + playerArmor + " Arrows: " + Arrows + " Room: (" + levelposX + ',' + levelposY + ") Floor:" + floor);
+        System.out.println("HP:" + Player.HP + '/' + Player.MaxHP + " Attack:" + Player.Attack + " Armor: " + Player.Armor + " Arrows: " + Player.Arrows + " Room: (" + levelposX + ',' + levelposY + ") Floor:" + floor);
         for (int i = 0; i < a.length; i++)
             System.out.println(Arrays.toString(a[i]));
     }
@@ -191,7 +189,7 @@ public class Dungeon {
                 if (a == levelposX && b == levelposY) ;
                 else
                     for (int w = rando.nextInt(5); w > 0; w--) {
-                        LevelList[a][b][rando.nextInt(RoomSize - 2) + 1][rando.nextInt(RoomSize - 2) + 1] = (char) (floor + 47 - ascension * 10);
+                        LevelList[a][b][rando.nextInt(RoomSize - 2) + 1][rando.nextInt(RoomSize - 2) + 1] = '0';
                     }
             }
         //generates all objects such as food and arrows
@@ -214,17 +212,17 @@ public class Dungeon {
         //System.out.println("x "+w);
         //System.out.println("y "+v);
 
-        //creating  test objects
+        //creating  SwordMonster objects
         LevelList[1][0][3][4] = 'L';
         LevelList[1][0][4][4] = 'F';
         LevelList[1][0][4][4] = 'L';
 
         //updates player stats
         if (floor != 1) {
-            playerHP = (int) (playerHP * 1.1 + floor);
-            playerMaxHP = (int) (playerMaxHP * 1.1 + floor);
-            playerAttack = (int) (playerAttack * 1.1 + floor);
-            playerArmor = playerArmor + floor / 2;
+            Player.HP = (int) (Player.HP * 1.1 + floor);
+            Player.MaxHP = (int) (Player.MaxHP * 1.1 + floor);
+            Player.Attack = (int) (Player.Attack * 1.1 + floor);
+            Player.Armor = Player.Armor + floor / 2;
 
             System.out.println(ascension);
             System.out.println(floor - ascension * 10);
@@ -237,15 +235,15 @@ public class Dungeon {
 
     private static void enterRoom() {
         //clears monsters
-        Monsters.clear();
         Monster_list.clear();
         //checks every spot in room and adds integers to Monsters array
         for (int y = 0; y < RoomSize; y++)
             for (int x = 0; x < RoomSize; x++)
                 if (isInt(LevelList[levelposX][levelposY][y][x])) {
-                    Monsters.add(new Monster(floor, x, y, levelposX, levelposY));
+                    System.out.println("adding a monster");
+                    //Monsters.add(new Monster(floor, x, y, levelposX, levelposY));
                     //TODO add a way to get monster type
-                    Monster_list.addMonster(0, x, y);
+                    Monster_list.addMonster(LevelList[levelposX][levelposY][y][x], x, y);
                 }
     }
 
@@ -255,68 +253,68 @@ public class Dungeon {
             //System.out.println('posY: ' + posY + ' posX: ' + posX);
 
             if (direction.equals("w")) //up
-                if (posY == 0) {
-                    LevelList[levelposX][levelposY][posY_Old][posX_Old] = ' ';
-                    posY = RoomSize - 1;
-                    posY_Old = posY;
+                if ( Player.posY == 0) {
+                    LevelList[levelposX][levelposY][ Player.posY_Old][Player.posX_Old] = ' ';
+                    Player.posY = RoomSize - 1;
+                    Player.posY_Old = Player.posY;
                     levelposY -= 1;
                     enterRoom();
                 } else
-                    posY--;
+                    Player.posY--;
 
             else if (direction.equals("s"))//down
-                if (posY == RoomSize - 1) {
-                    LevelList[levelposX][levelposY][posY_Old][posX_Old] = ' ';
-                    posY = 0;
-                    posY_Old = posY;
+                if (Player.posY == RoomSize - 1) {
+                    LevelList[levelposX][levelposY][Player.posY_Old][ Player.posX_Old] = ' ';
+                    Player. posY = 0;
+                    Player. posY_Old = Player.posY;
                     levelposY += 1;
                     enterRoom();
                 } else
-                    posY++;
+                    Player. posY++;
 
             else if (direction.equals("a"))//left
-                if (posX == 0) {
-                    LevelList[levelposX][levelposY][posY_Old][posX_Old] = ' ';
-                    posX = RoomSize - 1;
-                    posX_Old = posX;
+                if (Player.posX == 0) {
+                    LevelList[levelposX][levelposY][Player.posY_Old][Player.posX_Old] = ' ';
+                    Player.posX = RoomSize - 1;
+                    Player. posX_Old = Player.posX;
                     levelposX -= 1;
                     enterRoom();
                 } else
-                    posX--;
+                    Player.posX--;
 
             else if (direction.equals("d"))//right
-                if (posX == RoomSize - 1) {
-                    LevelList[levelposX][levelposY][posY_Old][posX_Old] = ' ';
-                    posX = 0;
-                    posX_Old = posX;
+                if (Player.posX == RoomSize - 1) {
+                    LevelList[levelposX][levelposY][Player.posY_Old][Player.posX_Old] = ' ';
+                    Player. posX = 0;
+                    Player.  posX_Old = Player.posX;
                     levelposX += 1;
                     enterRoom();
                 } else
-                    posX++;
+                    Player. posX++;
             else if (direction.equals("shoot")) {
-                if (Arrows > 0) {
+                if (Player.Arrows > 0) {
                     direction = scan.nextLine();
                     if (direction.equals("d") || direction.equals("a")) {
-                        int ArrowPos = posX;
+                        int ArrowPos = Player.posX;
                         do {
                             if (direction.equals("d") && ArrowPos != RoomSize - 1)
                                 ArrowPos++;
                             else if (ArrowPos != 0)
                                 ArrowPos--;
-                            if (LevelList[levelposX][levelposY][posY][ArrowPos] == ' ')
-                                LevelList[levelposX][levelposY][posY][ArrowPos] = '-';
+                            if (LevelList[levelposX][levelposY][Player.posY][ArrowPos] == ' ')
+                                LevelList[levelposX][levelposY][Player.posY][ArrowPos] = '-';
                             //printLevel(LevelList[levelposX][levelposY]);
 
                         }
-                        while (LevelList[levelposX][levelposY][posY][ArrowPos] == '-' && ArrowPos != 0 && ArrowPos != RoomSize - 1);
-
-                        attackMonster(posY, ArrowPos);
+                        while (LevelList[levelposX][levelposY][ Player.posY][ArrowPos] == '-' && ArrowPos != 0 && ArrowPos != RoomSize - 1);
+                        Monster_list.attackMonster(Player.posY, Player.posX);
+                      //  attackMonster(posY, ArrowPos);
                     } else if (direction.equals("s") || direction.equals("w")) {
 
-                        int ArrowPos = posY;
+                        int ArrowPos = Player.posY;
                         do {
-                            if (LevelList[levelposX][levelposY][ArrowPos][posX] != '@')
-                                LevelList[levelposX][levelposY][ArrowPos][posX] = '|';
+                            if (LevelList[levelposX][levelposY][ArrowPos][Player.posX] != '@')
+                                LevelList[levelposX][levelposY][ArrowPos][Player.posX] = '|';
                             if (direction.equals("s") && ArrowPos != RoomSize - 1)
                                 ArrowPos++;
                             else if (ArrowPos != 0)
@@ -324,10 +322,10 @@ public class Dungeon {
                             printLevel(LevelList[levelposX][levelposY]);
 
                         }
-                        while (LevelList[levelposX][levelposY][ArrowPos][posX] == ' ' || LevelList[levelposX][levelposY][ArrowPos][posX] == '@' && ArrowPos != 0 && ArrowPos != RoomSize - 1);
-                        attackMonster(ArrowPos, posX);
+                        while (LevelList[levelposX][levelposY][ArrowPos][Player.posX] == ' ' || LevelList[levelposX][levelposY][ArrowPos][Player.posX] == '@' && ArrowPos != 0 && ArrowPos != RoomSize - 1);
+                        Monster_list.attackMonster(Player.posY, Player.posX);
                     }
-                    Arrows--;
+                    Player.Arrows--;
 
                     for (int a = 0; a < RoomSize; a++)
                         for (int b = 0; b < RoomSize; b++)
@@ -351,44 +349,38 @@ public class Dungeon {
     }
 
     public static boolean isInt(char character) {
-        if ((int) character >= 48 && (int) character <= 57)
-            return true;
-        else
-            return false;
+        return (int) character >= 48 && (int) character <= 57;
     }
 
     static public boolean isDead() {
-        if (playerHP <= 0)
-            return true;
-        else
-            return false;
+        return  Player.HP <= 0;
     }
 
-    static void attackMonster(int Ypos, int Xpos) {
-        if (isInt(LevelList[levelposX][levelposY][Ypos][Xpos])) {
-            for (int i = 0; i < Monsters.size(); i++) {
-                baddie = Monsters.get(i);
-
-                if (baddie.posX == Xpos && baddie.posY == Ypos) {
-                    System.out.println(baddie.HP);
-                    baddie.takeDamage(playerAttack);
-                    System.out.println(baddie.HP);
-
-                    if (baddie.HP <= 0) {
-                        LevelList[levelposX][levelposY][baddie.getY()][baddie.getX()] = ' ';
-                        Monsters.remove(Monsters.indexOf(baddie));
-                        killCount++;
-                        baddie = null;
-                    }
-                }
-            }
-            if (Ypos == posY && Xpos == posX) {
-                posY = posY_Old;
-                posX = posX_Old;
-            }
-        }
-
-    }
+//    static void attackMonster(int Ypos, int Xpos) {
+//        if (isInt(LevelList[levelposX][levelposY][Ypos][Xpos])) {
+//            for (int i = 0; i < Monsters.size(); i++) {
+//                baddie = Monsters.get(i);
+//
+//                if (baddie.posX == Xpos && baddie.posY == Ypos) {
+//                    System.out.println(baddie.HP);
+//                    baddie.takeDamage(playerAttack);
+//                    System.out.println(baddie.HP);
+//
+//                    if (baddie.HP <= 0) {
+//                        LevelList[levelposX][levelposY][baddie.getY()][baddie.getX()] = ' ';
+//                        Monsters.remove(Monsters.indexOf(baddie));
+//                        killCount++;
+//                        baddie = null;
+//                    }
+//                }
+//            }
+//            if (Ypos == posY && Xpos == posX) {
+//                posY = posY_Old;
+//                posX = posX_Old;
+//            }
+//        }
+//
+//    }
 
     public char getPosition(int Y,int X){
         return LevelList[levelposX][levelposY][Y][X];

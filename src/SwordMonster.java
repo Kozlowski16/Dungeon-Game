@@ -1,8 +1,8 @@
 
-public class test extends MonsterAbstract {
+public class SwordMonster extends MonsterAbstract {
 
-    public test( int x, int y) {
-        super(x, y);
+    public SwordMonster(int x, int y, char type) {
+        super(x, y, type);
         // TODO Auto-generated constructor stub
     }
 
@@ -13,13 +13,14 @@ public class test extends MonsterAbstract {
                 Player.HP -= Attack - rando.nextInt(Player.Armor + 1);
         if (Player.posY + 1 == posY || Player.posY - 1 == posY)
             if (Player.posX == posX)
-                Dungeon.playerHP = Dungeon.playerHP - Attack + rando.nextInt(Dungeon.playerArmor + 1);
+                Player.HP =  Player.HP - Attack + rando.nextInt( Player.Armor + 1);
     }
 
     @Override
     public void action() {
         attack();
         move();
+        System.out.println("SwordMonsterran " + getX() + " " + getY());
     }
 
 }

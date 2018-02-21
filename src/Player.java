@@ -1,9 +1,9 @@
 public class Player {
-    static int HP;
-    static int MaxHP;
-    static int Armor;
-    static int Attack;
-    static int Arrows;
+    static int HP=100;
+    static int MaxHP=100;
+    static int Armor=1;
+    static int Attack=10;
+    static int Arrows=3;
 
     static int posX;
     static int posY;
@@ -14,7 +14,7 @@ public class Player {
         MaxHP = 100;
         HP = MaxHP;
         Armor = 0;
-        Attack = 10;
+        Attack = 1000;
         Arrows = 3;
 
         posX = 3;

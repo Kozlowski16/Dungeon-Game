@@ -13,13 +13,13 @@ public abstract class MonsterAbstract {
     public char looks;
 
 
-    public MonsterAbstract(int x, int y) {
+    public MonsterAbstract(int x, int y,char type) {
 
         Attack = (int) (4 + Dungeon.floor * 1.1);
         HP = (int) ((8 + Math.pow(Dungeon.floor, 1.4)) * 2);
         posX = x;
         posY = y;
-        looks = (char) (Dungeon.floor + 47 - Dungeon.ascension * 10);
+        looks = type;
         System.out.println("looks: " + looks);
         old_posY = posY;
         old_posX = posX;
@@ -68,11 +68,12 @@ public abstract class MonsterAbstract {
     }
 
     public int getY() {
-        return posX;
+        return posY;
     }
 
     public void takeDamage(int dmg) {
-        HP -= dmg - armor;
+        HP = HP - dmg + armor;
+        System.out.println("SwordMonster took " + (dmg-armor) + "damaage" );
     }
 
     public abstract void attack();
