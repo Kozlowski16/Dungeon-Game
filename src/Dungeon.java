@@ -31,7 +31,7 @@ public class Dungeon {
     private static int floorsize = 2;
     static int posX, posY, posX_Old, posY_Old, door2;
     private static boolean qq;
-    private static int killCount;
+    static int killCount;
     static int ascension;
     //4d Array.... what have I done?
     static char[][][][] LevelList = new char[floorsize][floorsize][RoomSize][RoomSize];
@@ -96,6 +96,10 @@ public class Dungeon {
 
             //marks position of character
             LevelList[levelposX][levelposY][posY][posX] = '@';
+
+
+            Monster_list.runMonsters();
+
 
             for (Monster baddie : Monsters) {
                 //System.out.println("hp: "+ baddie.HP);
@@ -234,12 +238,14 @@ public class Dungeon {
     private static void enterRoom() {
         //clears monsters
         Monsters.clear();
-
+        Monster_list.clear();
         //checks every spot in room and adds integers to Monsters array
         for (int y = 0; y < RoomSize; y++)
             for (int x = 0; x < RoomSize; x++)
                 if (isInt(LevelList[levelposX][levelposY][y][x])) {
                     Monsters.add(new Monster(floor, x, y, levelposX, levelposY));
+                    //TODO add a way to get monster type
+                    Monster_list.addMonster(0, x, y);
                 }
     }
 
@@ -341,7 +347,7 @@ public class Dungeon {
                 System.out.println("please input a valid command");
                 direction = "q";
             }
-        } while (direction == "q");
+        } while (direction.equals("q"));
     }
 
     public static boolean isInt(char character) {
@@ -384,4 +390,11 @@ public class Dungeon {
 
     }
 
+    public char getPosition(int Y,int X){
+        return LevelList[levelposX][levelposY][Y][X];
+    }
+
+    public void setPositionChar(int Y,int X, char looks){
+        LevelList[levelposX][levelposY][Y][X]=looks;
+    }
 }

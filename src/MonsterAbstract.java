@@ -29,6 +29,7 @@ public abstract class MonsterAbstract {
     public void move() {
         old_posY = posY;
         old_posX = posX;
+        Dungeon.LevelList[Dungeon.levelposX][Dungeon.levelposY][posY][posX] =' ';
         //System.out.println("level: "+ Attack+ " posX: " + posX + " posY: " + posY );
         //if both x and y are different
         if (Player.posX != posX && Player.posY != posY) {
@@ -58,7 +59,7 @@ public abstract class MonsterAbstract {
             posY = old_posY;
             posX = old_posX;
         }
-
+        Dungeon.LevelList[Dungeon.levelposX][Dungeon.levelposY][posY][posX] =looks;
 
     }
 
