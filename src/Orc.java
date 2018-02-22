@@ -1,7 +1,7 @@
 
-public class SwordMonster extends MonsterAbstract {
+public class Orc extends MonsterBase {
 
-    public SwordMonster(int x, int y, char type) {
+    public Orc(int x, int y, char type) {
         super(x, y, type);
         // TODO Auto-generated constructor stub
     }
@@ -20,7 +20,7 @@ public class SwordMonster extends MonsterAbstract {
     public void action() {
         attack();
         move();
-        System.out.println("SwordMonsterran " + getX() + " " + getY());
+        System.out.println("orcs ran " + getX() + " " + getY());
     }
 
 }

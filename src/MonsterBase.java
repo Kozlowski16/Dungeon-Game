@@ -1,19 +1,16 @@
 import java.util.Random;
 
-public abstract class MonsterAbstract {
+public abstract class MonsterBase {
     Random rando = new Random();
-
     public int Attack;
     public int HP;
     public int armor;
     public int posY;
     public int posX;
     public int old_posY, old_posX;
-
     public char looks;
 
-
-    public MonsterAbstract(int x, int y,char type) {
+    public MonsterBase(int x, int y, char type) {
 
         Attack = (int) (4 + Dungeon.floor * 1.1);
         HP = (int) ((8 + Math.pow(Dungeon.floor, 1.4)) * 2);
@@ -54,6 +51,14 @@ public abstract class MonsterAbstract {
                 else
                     posY++;
         }
+        else if (Player.posX != posX && Player.posY == posY) {
+            //System.out.println("X=X");
+            if (Player.posX + 1 != posX && Player.posX - 1 != posX)
+                if (Player.posX < posX)
+                    posX--;
+                else
+                    posX++;
+        }
 
         if (Dungeon.LevelList[Dungeon.levelposX][Dungeon.levelposY][posY][posX] != ' ') {
             posY = old_posY;
@@ -73,12 +78,11 @@ public abstract class MonsterAbstract {
 
     public void takeDamage(int dmg) {
         HP = HP - dmg + armor;
-        System.out.println("SwordMonster took " + (dmg-armor) + "damaage" );
+        System.out.println("orcs took " + (dmg-armor) + "damaage" );
     }
 
     public abstract void attack();
 
     public abstract void action();
-
 
 }

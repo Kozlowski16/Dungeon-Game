@@ -3,7 +3,7 @@ public class Player {
     static int MaxHP=100;
     static int Armor=1;
     static int Attack=10;
-    static int Arrows=3;
+    static int Arrows=300;
 
     static int posX;
     static int posY;
