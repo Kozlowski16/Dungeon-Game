@@ -1,41 +1,37 @@
 import java.util.ArrayList;
 
 public class Monster_list {
-    static ArrayList<Orc> orcs = new ArrayList<Orc>();
-    static ArrayList<Archer> archers = new ArrayList<Archer>();
+    static ArrayList<MonsterBase> MonsterBase = new ArrayList<MonsterBase>();
 
     public static void clear() {
-        orcs.clear();
-        archers.clear();
+    	MonsterBase.clear();
     }
 
     public static void addMonster(char type, int X, int Y) {
         switch (type){
             case '0':
-                orcs.add(new Orc(X, Y, type));
+            	MonsterBase.add(new Orc(X, Y, type));
                 break;
             case '1':
-                archers.add(new Archer(X, Y, type));
+            	MonsterBase.add(new Archer(X, Y, type));
                 break;
         }
     }
     public static void runMonsters(){
-        for(Orc baddie: orcs)
-            baddie.action();
-        for(Archer baddie: archers)
+        for(MonsterBase baddie: MonsterBase)
             baddie.action();
     }
     public static void attackMonster(int Ypos,int Xpos){
         if (Dungeon.isInt(Dungeon.LevelList[Dungeon.levelposX][Dungeon.levelposY][Ypos][Xpos])) {
-            for (int i = 0; i < orcs.size(); i++) {
+            for (int i = 0; i < MonsterBase.size(); i++) {
+            	
+                if (MonsterBase.get(i).posX == Xpos &&  MonsterBase.get(i).posY == Ypos) {
+                	
+                	MonsterBase.get(i).takeDamage(Player.Attack);
 
-                if (orcs.get(i).posX == Xpos &&  orcs.get(i).posY == Ypos) {
-
-                    orcs.get(i).takeDamage(Player.Attack);
-
-                    if (orcs.get(i).HP <= 0) {
-                        Dungeon.LevelList[Dungeon.levelposX][Dungeon.levelposY][orcs.get(i).getY()][orcs.get(i).getX()] = ' ';
-                        orcs.remove(i);
+                    if (MonsterBase.get(i).HP <= 0) {
+                        Dungeon.LevelList[Dungeon.levelposX][Dungeon.levelposY][MonsterBase.get(i).getY()][MonsterBase.get(i).getX()] = ' ';
+                        MonsterBase.remove(i);
                         Dungeon.killCount++;
                         System.out.println("Test Monster died");
                     }

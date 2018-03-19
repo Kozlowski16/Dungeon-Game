@@ -48,7 +48,8 @@ public class Dungeon {
                 break;
 
             if (LevelList[levelposX][levelposY][Player.posY][Player.posX] != '#') {
-
+                LevelList[levelposX][levelposY][Player.posY_Old][Player.posX_Old] = ' ';
+                
                 if (LevelList[levelposX][levelposY][Player.posY][Player.posX] == 'F') {
                     Player.HP += Player.MaxHP * 0.1;
                     LevelList[levelposX][levelposY][Player.posY][Player.posX] = ' ';
@@ -67,10 +68,20 @@ public class Dungeon {
                 } else if (LevelList[levelposX][levelposY][Player.posY][Player.posX] == 'D') {
                     Player.Armor++;
                     LevelList[levelposX][levelposY][Player.posY][Player.posX] = ' ';
+                }else if (LevelList[levelposX][levelposY][Player.posY][Player.posX] == 'T') {
+                    LevelList[levelposX][levelposY][Player.posY][Player.posX] = ' ';
+                    do{
+                    	levelposX=rando.nextInt(floorsize);
+                    	levelposX=rando.nextInt(floorsize);
+                    	Player.posY=rando.nextInt(RoomSize - 2) + 1;
+                    	Player.posX=rando.nextInt(RoomSize - 2) + 1;
+                    }while(LevelList[levelposX][levelposY][Player.posY][Player.posX] != ' ');
+                    enterRoom();
                 }
+                
                 Monster_list.attackMonster(Player.posY, Player.posX);
+                
 
-                LevelList[levelposX][levelposY][Player.posY_Old][Player.posX_Old] = ' ';
                 Player.posX_Old = Player.posX;
                 Player.posY_Old = Player.posY;
             } else {
@@ -168,6 +179,8 @@ public class Dungeon {
                     LevelList[a][b][rando.nextInt(RoomSize - 2) + 1][rando.nextInt(RoomSize - 2) + 1] = '>';
                 else if (rando.nextInt(5) == 0)
                     LevelList[a][b][rando.nextInt(RoomSize - 2) + 1][rando.nextInt(RoomSize - 2) + 1] = 'D';
+                else if(rando.nextInt(3) == 0);
+                	LevelList[a][b][rando.nextInt(RoomSize - 2) + 1][rando.nextInt(RoomSize - 2) + 1] = 'T';
             }
 
         int w = rando.nextInt(floorsize);
@@ -177,10 +190,10 @@ public class Dungeon {
         //System.out.println("x "+w);
         //System.out.println("y "+v);
 
-        //creating  orcs objects
+        //creating  test objects
         LevelList[1][0][3][4] = 'L';
         LevelList[1][0][4][4] = 'F';
-        LevelList[1][0][4][4] = 'L';
+        LevelList[1][0][4][4] = 'T';
         LevelList[1][0][4][4] = '1';
 
         //updates player stats

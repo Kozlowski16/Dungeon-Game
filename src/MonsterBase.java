@@ -80,6 +80,9 @@ public abstract class MonsterBase {
         HP = HP - dmg + armor;
         System.out.println("orcs took " + (dmg-armor) + "damaage" );
     }
+    public void takeAttack(){
+    	
+    }
 
     public abstract void attack();
 
