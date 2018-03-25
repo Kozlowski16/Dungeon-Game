@@ -1,5 +1,5 @@
 
-public class Orc extends MonsterBase {
+public class Orc extends Monster {
 
     public Orc(int x, int y, char type) {
         super(x, y, type);

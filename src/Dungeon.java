@@ -193,7 +193,7 @@ public class Dungeon {
         //creating  test objects
         LevelList[1][0][3][4] = 'L';
         LevelList[1][0][4][4] = 'F';
-        LevelList[1][0][4][4] = 'T';
+        LevelList[0][1][2][4] = '2';
         LevelList[1][0][4][4] = '1';
 
         //updates player stats
@@ -307,7 +307,7 @@ public class Dungeon {
                 }
             }
             //cheater dev command
-            //else if(direction.equals("n"));
+            else if(direction.equals("n"));
 
             else if (direction.equals("stop"))
                 qq = true;

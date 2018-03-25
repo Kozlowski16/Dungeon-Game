@@ -1,6 +1,6 @@
 import java.util.Random;
 
-public abstract class MonsterBase {
+public abstract class Monster {
     Random rando = new Random();
     public int Attack;
     public int HP;
@@ -10,7 +10,7 @@ public abstract class MonsterBase {
     public int old_posY, old_posX;
     public char looks;
 
-    public MonsterBase(int x, int y, char type) {
+    public Monster(int x, int y, char type) {
 
         Attack = (int) (4 + Dungeon.floor * 1.1);
         HP = (int) ((8 + Math.pow(Dungeon.floor, 1.4)) * 2);
@@ -22,42 +22,40 @@ public abstract class MonsterBase {
         old_posX = posX;
         armor = 1;
     }
+    protected void moveX(){
+        if (Player.posX < posX)
+            posX--;
+        else
+            posX++;
+    }
+    protected void moveY(){
+        if (Player.posY < posY)
+            posY--;
+        else
+            posY++;
+    }
 
     public void move() {
         old_posY = posY;
         old_posX = posX;
         Dungeon.LevelList[Dungeon.levelposX][Dungeon.levelposY][posY][posX] =' ';
-        //System.out.println("level: "+ Attack+ " posX: " + posX + " posY: " + posY );
         //if both x and y are different
         if (Player.posX != posX && Player.posY != posY) {
             //System.out.println("none");
             //rolls to see if x or y changes and changes it
             if (rando.nextInt(2) == 1)
-                if (Player.posX < posX)
-                    posX--;
-                else
-                    posX++;
-            else if (Player.posY < posY)
-                posY--;
+                moveX();
             else
-                posY++;
+                moveY();
         }
         // if x values are equal but not y
         else if (Player.posX == posX && Player.posY != posY) {
-            //System.out.println("X=X");
-            if (Player.posY + 1 != posY && Player.posY - 1 != posY)
-                if (Player.posY < posY)
-                    posY--;
-                else
-                    posY++;
+           // if (Player.posY + 1 != posY && Player.posY - 1 != posY)
+                moveY();
         }
         else if (Player.posX != posX && Player.posY == posY) {
-            //System.out.println("X=X");
-            if (Player.posX + 1 != posX && Player.posX - 1 != posX)
-                if (Player.posX < posX)
-                    posX--;
-                else
-                    posX++;
+           // if (Player.posX + 1 != posX && Player.posX - 1 != posX)
+                moveX();
         }
 
         if (Dungeon.LevelList[Dungeon.levelposX][Dungeon.levelposY][posY][posX] != ' ') {
@@ -78,7 +76,7 @@ public abstract class MonsterBase {
 
     public void takeDamage(int dmg) {
         HP = HP - dmg + armor;
-        System.out.println("orcs took " + (dmg-armor) + "damaage" );
+        System.out.println("Monster took " + (dmg-armor) + "damaage" );
     }
     public void takeAttack(){
     	

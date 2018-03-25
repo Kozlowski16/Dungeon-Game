@@ -1,6 +1,6 @@
 public class Player {
-    static int HP=100;
-    static int MaxHP=100;
+    static int HP=300;
+    static int MaxHP=300;
     static int Armor=1;
     static int Attack=10;
     static int Arrows=300;

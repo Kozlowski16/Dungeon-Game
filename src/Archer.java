@@ -1,4 +1,4 @@
-public class Archer extends MonsterBase {
+public class Archer extends Monster {
     public Archer(int x, int y, char type) {
         super(x, y, type);
     }
