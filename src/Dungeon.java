@@ -9,6 +9,7 @@
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.Random;
+import javax.swing.*;
 
 public class Dungeon {
     private static Random rando = new Random();
@@ -29,6 +30,9 @@ public class Dungeon {
     static char[][][][] LevelList = new char[floorsize][floorsize][RoomSize][RoomSize];
 
     public static void main(String[] args) {
+        DungeonGUI hello = new DungeonGUI();
+        hello.setVisible(true);
+
         levelposX = floorsize / 2;
         levelposY = floorsize / 2;
         Player.posX = RoomSize / 2;
@@ -108,9 +112,24 @@ public class Dungeon {
     }
 
     static void printLevel(char[][] a) {
+        String text="<html>";
         System.out.println("HP:" + Player.HP + '/' + Player.MaxHP + " Attack:" + Player.Attack + " Armor: " + Player.Armor + " Arrows: " + Player.Arrows + " Room: (" + levelposX + ',' + levelposY + ") Floor:" + floor);
-        for (int i = 0; i < a.length; i++)
+        for (int i = 0; i < a.length; i++) {
             System.out.println(Arrays.toString(a[i]));
+            //text+=Arrays.toString(a[i])+"<br/>";
+        }
+        for (int y = 0; y < RoomSize; y++) {
+            for (int x = 0; x < RoomSize; x++) {
+                text+=a[y][x]+ ",&nbsp;";
+               // System.out.println("Y: " + y + " X: " + x + " " + a[y][x]);
+            }
+            text+=" <br/>";
+        }
+
+        text+="</html>";
+        //System.out.println(text);
+
+        DungeonGUI.map.setText(text);
     }
 
     private static void generateFloor() {

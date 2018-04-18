@@ -18,7 +18,6 @@ public class Monster_list {
             case '2':
                 Monster.add(new Spear(X, Y, type));
                 break;
-
         }
     }
     public static void runMonsters(){
