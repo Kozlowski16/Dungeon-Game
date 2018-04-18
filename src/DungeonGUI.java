@@ -27,7 +27,7 @@ public class DungeonGUI extends JFrame {
             upButton.setBounds(30*2,5*2,20*2,20*2);
             upButton.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e) {
-
+                    Dungeon.userAction("w");
                 }
             });
 

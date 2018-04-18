@@ -46,64 +46,14 @@ public class Dungeon {
         LevelList[levelposX][levelposY][ Player.posY][ Player.posX] = '@';
         printLevel(LevelList[levelposX][levelposY]);
 
-        while (true) {
-            userAction();
-            if (qq)
-                break;
-
-            if (LevelList[levelposX][levelposY][Player.posY][Player.posX] != '#') {
-                LevelList[levelposX][levelposY][Player.posY_Old][Player.posX_Old] = ' ';
-                
-                if (LevelList[levelposX][levelposY][Player.posY][Player.posX] == 'F') {
-                    Player.HP += Player.MaxHP * 0.1;
-                    LevelList[levelposX][levelposY][Player.posY][Player.posX] = ' ';
-                    if (Player.HP > Player.MaxHP)
-                        Player.HP = Player.MaxHP;
-                } else if (LevelList[levelposX][levelposY][Player.posY][Player.posX] == 'L') {
-                    floor++;
-                    LevelList[levelposX][levelposY][Player.posY][Player.posX] = ' ';
-                    generateFloor();
-                } else if (LevelList[levelposX][levelposY][Player.posY][Player.posX] == 'A') {
-                    Player.Attack += floor;
-                    LevelList[levelposX][levelposY][Player.posY][Player.posX] = ' ';
-                } else if (LevelList[levelposX][levelposY][Player.posY][Player.posX] == '>') {
-                    Player. Arrows += 3;
-                    LevelList[levelposX][levelposY][Player.posY][Player.posX] = ' ';
-                } else if (LevelList[levelposX][levelposY][Player.posY][Player.posX] == 'D') {
-                    Player.Armor++;
-                    LevelList[levelposX][levelposY][Player.posY][Player.posX] = ' ';
-                }else if (LevelList[levelposX][levelposY][Player.posY][Player.posX] == 'T') {
-                    LevelList[levelposX][levelposY][Player.posY][Player.posX] = ' ';
-                    do{
-                    	levelposX=rando.nextInt(floorsize);
-                    	levelposX=rando.nextInt(floorsize);
-                    	Player.posY=rando.nextInt(RoomSize - 2) + 1;
-                    	Player.posX=rando.nextInt(RoomSize - 2) + 1;
-                    }while(LevelList[levelposX][levelposY][Player.posY][Player.posX] != ' ');
-                    enterRoom();
-                }
-                
-                Monster_list.attackMonster(Player.posY, Player.posX);
-                
-
-                Player.posX_Old = Player.posX;
-                Player.posY_Old = Player.posY;
-            } else {
-                System.out.println("You cant move into a wall");
-                Player.posY = Player.posY_Old;
-                Player.posX = Player. posX_Old;
-            }
-
-            //marks position of character
-            LevelList[levelposX][levelposY][ Player.posY][ Player.posX] = '@';
-
-            Monster_list.runMonsters();
-
-            if (isDead())
-                break;
-            //System.out.println('posY: ' + posY + ' posX: ' + posX);
-            printLevel(LevelList[levelposX][levelposY]);
-        }
+//        while (true) {
+//            direction = scan.nextLine();
+//            userAction(direction);
+//            if (qq)
+//                break;
+//            if (isDead())
+//                break;
+//        }
         int score;
         score = killCount * floor;
         System.out.println("Game Over");
@@ -238,12 +188,62 @@ public class Dungeon {
                     Monster_list.addMonster(LevelList[levelposX][levelposY][y][x], x, y);
                 }
     }
-    private static void userAction() {
-        do {
-            direction = scan.nextLine();
-            //System.out.println('posY: ' + posY + ' posX: ' + posX);
 
-            if (direction.equals("w")) //up
+    private static void upDateLevel(){
+
+        if (LevelList[levelposX][levelposY][Player.posY][Player.posX] != '#') {
+            LevelList[levelposX][levelposY][Player.posY_Old][Player.posX_Old] = ' ';
+
+            if (LevelList[levelposX][levelposY][Player.posY][Player.posX] == 'F') {
+                Player.HP += Player.MaxHP * 0.1;
+                LevelList[levelposX][levelposY][Player.posY][Player.posX] = ' ';
+                if (Player.HP > Player.MaxHP)
+                    Player.HP = Player.MaxHP;
+            } else if (LevelList[levelposX][levelposY][Player.posY][Player.posX] == 'L') {
+                floor++;
+                LevelList[levelposX][levelposY][Player.posY][Player.posX] = ' ';
+                generateFloor();
+            } else if (LevelList[levelposX][levelposY][Player.posY][Player.posX] == 'A') {
+                Player.Attack += floor;
+                LevelList[levelposX][levelposY][Player.posY][Player.posX] = ' ';
+            } else if (LevelList[levelposX][levelposY][Player.posY][Player.posX] == '>') {
+                Player. Arrows += 3;
+                LevelList[levelposX][levelposY][Player.posY][Player.posX] = ' ';
+            } else if (LevelList[levelposX][levelposY][Player.posY][Player.posX] == 'D') {
+                Player.Armor++;
+                LevelList[levelposX][levelposY][Player.posY][Player.posX] = ' ';
+            }else if (LevelList[levelposX][levelposY][Player.posY][Player.posX] == 'T') {
+                LevelList[levelposX][levelposY][Player.posY][Player.posX] = ' ';
+                do{
+                    levelposX=rando.nextInt(floorsize);
+                    levelposX=rando.nextInt(floorsize);
+                    Player.posY=rando.nextInt(RoomSize - 2) + 1;
+                    Player.posX=rando.nextInt(RoomSize - 2) + 1;
+                }while(LevelList[levelposX][levelposY][Player.posY][Player.posX] != ' ');
+                enterRoom();
+            }
+
+            Monster_list.attackMonster(Player.posY, Player.posX);
+
+
+            Player.posX_Old = Player.posX;
+            Player.posY_Old = Player.posY;
+        } else {
+            System.out.println("You cant move into a wall");
+            Player.posY = Player.posY_Old;
+            Player.posX = Player. posX_Old;
+        }
+
+        //marks position of character
+        LevelList[levelposX][levelposY][ Player.posY][ Player.posX] = '@';
+
+        Monster_list.runMonsters();
+
+        printLevel(LevelList[levelposX][levelposY]);
+    }
+
+    public static void userAction(String command) {
+            if (command.equals("w")) //up
                 if ( Player.posY == 0) {
                     LevelList[levelposX][levelposY][ Player.posY_Old][Player.posX_Old] = ' ';
                     Player.posY = RoomSize - 1;
@@ -253,7 +253,7 @@ public class Dungeon {
                 } else
                     Player.posY--;
 
-            else if (direction.equals("s"))//down
+            else if (command.equals("s"))//down
                 if (Player.posY == RoomSize - 1) {
                     LevelList[levelposX][levelposY][Player.posY_Old][ Player.posX_Old] = ' ';
                     Player. posY = 0;
@@ -263,7 +263,7 @@ public class Dungeon {
                 } else
                     Player. posY++;
 
-            else if (direction.equals("a"))//left
+            else if (command.equals("a"))//left
                 if (Player.posX == 0) {
                     LevelList[levelposX][levelposY][Player.posY_Old][Player.posX_Old] = ' ';
                     Player.posX = RoomSize - 1;
@@ -273,7 +273,7 @@ public class Dungeon {
                 } else
                     Player.posX--;
 
-            else if (direction.equals("d"))//right
+            else if (command.equals("d"))//right
                 if (Player.posX == RoomSize - 1) {
                     LevelList[levelposX][levelposY][Player.posY_Old][Player.posX_Old] = ' ';
                     Player. posX = 0;
@@ -282,7 +282,7 @@ public class Dungeon {
                     enterRoom();
                 } else
                     Player. posX++;
-            else if (direction.equals("shoot")) {
+            else if (command.equals("shoot")) {
                 if (Player.Arrows > 0) {
                     direction = scan.nextLine();
                     if (direction.equals("d") || direction.equals("a")) {
@@ -326,15 +326,16 @@ public class Dungeon {
                 }
             }
             //cheater dev command
-            else if(direction.equals("n"));
+            else if(command.equals("n"));
 
-            else if (direction.equals("stop"))
+            else if (command.equals("stop"))
                 qq = true;
             else {
                 System.out.println("please input a valid command");
                 direction = "q";
             }
-        } while (direction.equals("q"));
+            if(!direction.equals("q"))
+                upDateLevel();
     }
 
     public static boolean isInt(char character) {
