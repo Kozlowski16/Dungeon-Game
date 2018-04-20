@@ -5,11 +5,9 @@
  * better monster randimizer
  * different size rooms
  */
-
 import java.util.Arrays;
-import java.util.Scanner;
 import java.util.Random;
-import javax.swing.*;
+import java.util.Scanner;
 
 public class Dungeon {
     private static Random rando = new Random();
@@ -46,14 +44,14 @@ public class Dungeon {
         LevelList[levelposX][levelposY][ Player.posY][ Player.posX] = '@';
         printLevel(LevelList[levelposX][levelposY]);
 
-//        while (true) {
-//            direction = scan.nextLine();
-//            userAction(direction);
-//            if (qq)
-//                break;
-//            if (isDead())
-//                break;
-//        }
+        while (true) {
+            direction = scan.nextLine();
+            userAction(direction);
+            if (qq)
+                break;
+            if (isDead())
+                break;
+        }
         int score;
         score = killCount * floor;
         System.out.println("Game Over");
@@ -62,7 +60,8 @@ public class Dungeon {
     }
 
     static void printLevel(char[][] a) {
-        String text="<html>";
+        String text="<html><font size=\"5\"><p style=\"font-family:'Courier New', Courier, monospace\">";
+        text+="HP:" + Player.HP + '/' + Player.MaxHP + " Attack:" + Player.Attack + " Armor: " + Player.Armor + " Arrows: " + Player.Arrows + " Room: (" + levelposX + ',' + levelposY + ") Floor:" + floor+" <br/> ";
         System.out.println("HP:" + Player.HP + '/' + Player.MaxHP + " Attack:" + Player.Attack + " Armor: " + Player.Armor + " Arrows: " + Player.Arrows + " Room: (" + levelposX + ',' + levelposY + ") Floor:" + floor);
         for (int i = 0; i < a.length; i++) {
             System.out.println(Arrays.toString(a[i]));
@@ -70,13 +69,18 @@ public class Dungeon {
         }
         for (int y = 0; y < RoomSize; y++) {
             for (int x = 0; x < RoomSize; x++) {
-                text+=a[y][x]+ ",&nbsp;";
+                if(a[y][x]==' ')
+                    text+="&nbsp;";
+                else
+                    text+=a[y][x];
+                if(x!=RoomSize-1)
+                    text+=",";
                // System.out.println("Y: " + y + " X: " + x + " " + a[y][x]);
             }
-            text+=" <br/>";
+            text+=" <br/> ";
         }
 
-        text+="</html>";
+        text+="</p></font></html>";
         //System.out.println(text);
 
         DungeonGUI.map.setText(text);
@@ -332,9 +336,9 @@ public class Dungeon {
                 qq = true;
             else {
                 System.out.println("please input a valid command");
-                direction = "q";
+                command = "q";
             }
-            if(!direction.equals("q"))
+            if(!command.equals("q"))
                 upDateLevel();
     }
 

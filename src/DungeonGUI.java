@@ -36,7 +36,7 @@ public class DungeonGUI extends JFrame {
             downButton.setBounds(30*2,30*2,20*2,20*2);
             downButton.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e) {
-
+                    Dungeon.userAction("s");
                 }
             });
 
@@ -44,7 +44,7 @@ public class DungeonGUI extends JFrame {
             leftButton.setBounds(5*2,30*2,20*2,20*2);
             leftButton.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e) {
-
+                    Dungeon.userAction("a");
                 }
             });
 
@@ -52,7 +52,7 @@ public class DungeonGUI extends JFrame {
             rightButton.setBounds(55*2,30*2,20*2,20*2);
             rightButton.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e) {
-
+                    Dungeon.userAction("d");
                 }
             });
             add(upButton);
@@ -79,15 +79,13 @@ public class DungeonGUI extends JFrame {
         panel.setPreferredSize(new Dimension(250,250));
 
 
-        map=new JLabel("<html>Hello World!</br>blah&nbsp;blahblah</html>");
+        map=new JLabel("<html><p style=\"font-family:'Lucida Console', monospace\">Hello&nbsp;World! <br/>wwwwwwwwwwww</p></html>");
 
-        map.setBounds(10,10,200,200);
+        map.setBounds(200,10,200,200);
         add(new Buttons());
+        add(map);
 
-        panel.add(map);
-
-        add(panel);
-        add(new JPanel());
+        //add(panel);
         //add swing compnets to content pane
         //Container c = getContentPane();
 
