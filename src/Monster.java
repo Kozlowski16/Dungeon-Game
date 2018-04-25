@@ -2,13 +2,13 @@ import java.util.Random;
 
 public abstract class Monster {
     Random rando = new Random();
-    public int Attack;
-    public int HP;
-    public int armor;
-    public int posY;
-    public int posX;
-    public int old_posY, old_posX;
-    public char looks;
+    protected int Attack;
+    protected int HP;
+    protected int armor;
+    protected int posY;
+    protected int posX;
+    protected int old_posY, old_posX;
+    protected char looks;
 
     public Monster(int x, int y, char type) {
 
@@ -38,7 +38,7 @@ public abstract class Monster {
     public void move() {
         old_posY = posY;
         old_posX = posX;
-        Dungeon.LevelList[Dungeon.levelposX][Dungeon.levelposY][posY][posX] =' ';
+        Dungeon.getRoom()[posY][posX] =' ';
         //if both x and y are different
         if (Player.posX != posX && Player.posY != posY) {
             //System.out.println("none");
@@ -58,11 +58,11 @@ public abstract class Monster {
                 moveX();
         }
 
-        if (Dungeon.LevelList[Dungeon.levelposX][Dungeon.levelposY][posY][posX] != ' ') {
+        if (Dungeon.getRoom()[posY][posX] != ' ') {
             posY = old_posY;
             posX = old_posX;
         }
-        Dungeon.LevelList[Dungeon.levelposX][Dungeon.levelposY][posY][posX] =looks;
+        Dungeon.getRoom()[posY][posX] =looks;
 
     }
 

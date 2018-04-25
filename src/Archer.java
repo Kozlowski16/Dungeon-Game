@@ -8,39 +8,39 @@ public class Archer extends Monster {
         if (posY==Player.posY) {
             int ArrowPos = posX;
             do {
-                if (ArrowPos>Player.posX && ArrowPos != Dungeon.RoomSize - 1)
+                if (ArrowPos>Player.posX && ArrowPos != Dungeon.roomSize - 1)
                     ArrowPos--;
                 else if (ArrowPos != 0 )
                     ArrowPos++;
-                if (Dungeon.LevelList[Dungeon.levelposX][Dungeon.levelposY][posY][ArrowPos] == ' ')
-                    Dungeon.LevelList[Dungeon.levelposX][Dungeon.levelposY][posY][ArrowPos] = '-';
-               // Dungeon.printLevel(Dungeon.LevelList[Dungeon.levelposX][Dungeon.levelposY]);
+                if (Dungeon.getRoom()[posY][ArrowPos] == ' ')
+                    Dungeon.getRoom()[posY][ArrowPos] = '-';
+               // Dungeon.printLevel(Dungeon.getRoom());
 
-            } while (Dungeon.LevelList[Dungeon.levelposX][Dungeon.levelposY][ Player.posY][ArrowPos] == '-' && ArrowPos != Dungeon.RoomSize - 1 && ArrowPos != 0);
-            if(Dungeon.LevelList[Dungeon.levelposX][Dungeon.levelposY][ Player.posY][ArrowPos] =='@')
+            } while (Dungeon.getRoom()[ Player.posY][ArrowPos] == '-' && ArrowPos != Dungeon.roomSize - 1 && ArrowPos != 0);
+            if(Dungeon.getRoom()[ Player.posY][ArrowPos] =='@')
                 Player.HP=Player.HP-Attack +Player.Armor;
             hasShot=true;
         } else if (posX==Player.posX) {
             int ArrowPos = posY;
             do {
 
-                if (ArrowPos>Player.posY && ArrowPos != Dungeon.RoomSize - 1)
+                if (ArrowPos>Player.posY && ArrowPos != Dungeon.roomSize - 1)
                     ArrowPos--;
                 else if (ArrowPos != 0)
                     ArrowPos++;
-                if (Dungeon.LevelList[Dungeon.levelposX][Dungeon.levelposY][ArrowPos][posX] == ' ')
-                    Dungeon.LevelList[Dungeon.levelposX][Dungeon.levelposY][ArrowPos][posX] = '|';
-               //Dungeon.printLevel(Dungeon.LevelList[Dungeon.levelposX][Dungeon.levelposY]);
+                if (Dungeon.getRoom()[ArrowPos][posX] == ' ')
+                    Dungeon.getRoom()[ArrowPos][posX] = '|';
+               //Dungeon.printLevel(Dungeon.getRoom());
 
-            } while (Dungeon.LevelList[Dungeon.levelposX][Dungeon.levelposY][ArrowPos][posX] == '|' && ArrowPos != Dungeon.RoomSize - 1 && ArrowPos != 0);
-            if(Dungeon.LevelList[Dungeon.levelposX][Dungeon.levelposY][ArrowPos][posX] =='@')
+            } while (Dungeon.getRoom()[ArrowPos][posX] == '|' && ArrowPos != Dungeon.roomSize - 1 && ArrowPos != 0);
+            if(Dungeon.getRoom()[ArrowPos][posX] =='@')
                 Player.HP=Player.HP-Attack +Player.Armor;
             hasShot=true;
         }
-        for (int a = 0; a < Dungeon.RoomSize; a++)
-            for (int b = 0; b < Dungeon.RoomSize; b++)
-                if (Dungeon.LevelList[Dungeon.levelposX][Dungeon.levelposY][a][b] == '-' || Dungeon.LevelList[Dungeon.levelposX][Dungeon.levelposY][a][b] == '|')
-                    Dungeon.LevelList[Dungeon.levelposX][Dungeon.levelposY][a][b] = ' ';
+        for (int a = 0; a < Dungeon.roomSize; a++)
+            for (int b = 0; b < Dungeon.roomSize; b++)
+                if (Dungeon.getRoom()[a][b] == '-' || Dungeon.getRoom()[a][b] == '|')
+                    Dungeon.getRoom()[a][b] = ' ';
     }
 
     public void action() {

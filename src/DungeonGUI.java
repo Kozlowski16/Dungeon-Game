@@ -4,12 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class DungeonGUI extends JFrame {
-    private JButton upButton;
-    private JButton downButton;
-    private JButton rightButton;
-    private JButton leftButton;
-
-    public static JLabel map;
+	private static final long serialVersionUID = 1L;
+	
+	public static JLabel map;
 
     public static void main(String[] args) {
 
@@ -18,8 +15,11 @@ public class DungeonGUI extends JFrame {
         hello.setVisible(true);
 
     }
-    public class Buttons extends JPanel{
-        Buttons(){
+    private class Buttons extends JPanel{
+
+		private static final long serialVersionUID = 1L;
+
+		Buttons(){
             setLayout(null);
             setBackground(Color.LIGHT_GRAY);
             setBounds(10,10,160,110);
@@ -84,13 +84,6 @@ public class DungeonGUI extends JFrame {
         map.setBounds(200,10,200,200);
         add(new Buttons());
         add(map);
-
-        //add(panel);
-        //add swing compnets to content pane
-        //Container c = getContentPane();
-
-        //c.add(textArea,BorderLayout.CENTER);
-       // c.add(button,BorderLayout.SOUTH);
 
     }
 }

@@ -25,15 +25,15 @@ public class Monster_list {
             baddie.action();
     }
     public static void attackMonster(int Ypos,int Xpos){
-        if (Dungeon.isInt(Dungeon.LevelList[Dungeon.levelposX][Dungeon.levelposY][Ypos][Xpos])) {
+        if (Dungeon.isInt(Dungeon.getRoom()[Ypos][Xpos])) {
             for (int i = 0; i < Monster.size(); i++) {
             	
-                if (Monster.get(i).posX == Xpos &&  Monster.get(i).posY == Ypos) {
+                if (Monster.get(i).getX() == Xpos &&  Monster.get(i).getY() == Ypos) {
                 	
                 	Monster.get(i).takeDamage(Player.Attack);
 
                     if (Monster.get(i).HP <= 0) {
-                        Dungeon.LevelList[Dungeon.levelposX][Dungeon.levelposY][Monster.get(i).getY()][Monster.get(i).getX()] = ' ';
+                        Dungeon.getRoom()[Monster.get(i).getY()][Monster.get(i).getX()] = ' ';
                         Monster.remove(i);
                         Dungeon.killCount++;
                         System.out.println("Monster died");
