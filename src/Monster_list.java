@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
-public class Monster_list {
-    static ArrayList<Monster> Monster = new ArrayList<Monster>();
+class Monster_list {
+    private static ArrayList<Monster> Monster = new ArrayList<>();
 
     public static void clear() {
     	Monster.clear();
@@ -27,13 +27,13 @@ public class Monster_list {
     public static void attackMonster(int Ypos,int Xpos){
         if (Dungeon.isInt(Dungeon.getRoom()[Ypos][Xpos])) {
             for (int i = 0; i < Monster.size(); i++) {
-            	
-                if (Monster.get(i).getX() == Xpos &&  Monster.get(i).getY() == Ypos) {
-                	
-                	Monster.get(i).takeDamage(Player.Attack);
+                Monster tempMonster = Monster.get(i);
+                if (tempMonster.getX() == Xpos &&  tempMonster.getY() == Ypos) {
 
-                    if (Monster.get(i).HP <= 0) {
-                        Dungeon.getRoom()[Monster.get(i).getY()][Monster.get(i).getX()] = ' ';
+                    tempMonster.takeDamage(Player.Attack);
+
+                    if (tempMonster.HP <= 0) {
+                        Dungeon.getRoom()[tempMonster.getY()][tempMonster.getX()] = ' ';
                         Monster.remove(i);
                         Dungeon.killCount++;
                         System.out.println("Monster died");

@@ -5,25 +5,24 @@
  * better monster randimizer
  * different size rooms
  */
+
 import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
-public class Dungeon {
-    private static Random rando = new Random();
-
+class Dungeon {
+    public static int roomSize = 8;
     static int floor = 1;
-    static int levelPosX, levelPosY;
-
+    static int killCount;
+    private static Random rando = new Random();
+    private static int levelPosX;
+    private static int levelPosY;
     private static String direction;
     private static Scanner scan = new Scanner(System.in);
-    public static int roomSize = 8;
     private static int floorSize = 2;
-
     private static boolean qq;
-    static int killCount;
     //4d Array.... what have I done?
-    static char[][][][] LevelList = new char[floorSize][floorSize][roomSize][roomSize];
+    private static char[][][][] LevelList = new char[floorSize][floorSize][roomSize][roomSize];
 
     public static void main(String[] args) {
         DungeonGUI hello = new DungeonGUI();
@@ -33,14 +32,14 @@ public class Dungeon {
         levelPosY = floorSize / 2;
         Player.posX = roomSize / 2;
         Player.posY = roomSize / 2;
-        Player.posX_Old =  Player.posX;
-        Player.posY_Old =  Player.posY;
+        Player.posX_Old = Player.posX;
+        Player.posY_Old = Player.posY;
 
         generateFloor();
 
         //prints room and player
-        LevelList[levelPosX][levelPosY][ Player.posY][ Player.posX] = '@';
-        printLevel(LevelList[levelPosX][levelPosY]);
+        getRoom()[Player.posY][Player.posX] = '@';
+        printLevel(getRoom());
 
         while (true) {
             direction = scan.nextLine();
@@ -57,28 +56,28 @@ public class Dungeon {
         System.out.println("Thanks for playing");
     }
 
-    static void printLevel(char[][] a) {
-        String text="<html><font size=\"5\"><p style=\"font-family:'Courier New', Courier, monospace\">";
-        text+="HP:" + Player.HP + '/' + Player.MaxHP + " Attack:" + Player.Attack + " Armor: " + Player.Armor + " Arrows: " + Player.Arrows + " Room: (" + levelPosX + ',' + levelPosY + ") Floor:" + floor+" <br/> ";
+    private static void printLevel(char[][] a) {
+        String text = "<html><font size=\"5\"><p style=\"font-family:'Courier New', Courier, monospace\">";
+        text += "HP:" + Player.HP + '/' + Player.MaxHP + " Attack:" + Player.Attack + " Armor: " + Player.Armor + " Arrows: " + Player.Arrows + " Room: (" + levelPosX + ',' + levelPosY + ") Floor:" + floor + " <br/> ";
         System.out.println("HP:" + Player.HP + '/' + Player.MaxHP + " Attack:" + Player.Attack + " Armor: " + Player.Armor + " Arrows: " + Player.Arrows + " Room: (" + levelPosX + ',' + levelPosY + ") Floor:" + floor);
-        for (int i = 0; i < a.length; i++) {
-            System.out.println(Arrays.toString(a[i]));
+        for (char[] anA : a) {
+            System.out.println(Arrays.toString(anA));
             //text+=Arrays.toString(a[i])+"<br/>";
         }
         for (int y = 0; y < roomSize; y++) {
             for (int x = 0; x < roomSize; x++) {
-                if(a[y][x]==' ')
-                    text+="&nbsp;";
+                if (a[y][x] == ' ')
+                    text += "&nbsp;";
                 else
-                    text+=a[y][x];
-                if(x!= roomSize -1)
-                    text+=",";
-               // System.out.println("Y: " + y + " X: " + x + " " + a[y][x]);
+                    text += a[y][x];
+                if (x != roomSize - 1)
+                    text += ",";
+                // System.out.println("Y: " + y + " X: " + x + " " + a[y][x]);
             }
-            text+=" <br/> ";
+            text += " <br/> ";
         }
 
-        text+="</p></font></html>";
+        text += "</p></font></html>";
         //System.out.println(text);
 
         DungeonGUI.map.setText(text);
@@ -134,8 +133,7 @@ public class Dungeon {
         //Create monster randomly
         for (int a = 0; a < floorSize; a++)
             for (int b = 0; b < floorSize; b++) {
-                if (a == levelPosX && b == levelPosY) ;
-                else
+                if (a != levelPosX || b != levelPosY)
                     for (int w = rando.nextInt(5); w > 0; w--) {
                         LevelList[a][b][rando.nextInt(roomSize - 2) + 1][rando.nextInt(roomSize - 2) + 1] = '0';
                     }
@@ -151,8 +149,8 @@ public class Dungeon {
                     LevelList[a][b][rando.nextInt(roomSize - 2) + 1][rando.nextInt(roomSize - 2) + 1] = '>';
                 else if (rando.nextInt(5) == 0)
                     LevelList[a][b][rando.nextInt(roomSize - 2) + 1][rando.nextInt(roomSize - 2) + 1] = 'D';
-                else if(rando.nextInt(3) == 0);
-                	LevelList[a][b][rando.nextInt(roomSize - 2) + 1][rando.nextInt(roomSize - 2) + 1] = 'T';
+                else if (rando.nextInt(3) == 0) ;
+                LevelList[a][b][rando.nextInt(roomSize - 2) + 1][rando.nextInt(roomSize - 2) + 1] = 'T';
             }
 
         int w = rando.nextInt(floorSize);
@@ -184,46 +182,53 @@ public class Dungeon {
         //checks every spot in room and adds integers to orcs array
         for (int y = 0; y < roomSize; y++)
             for (int x = 0; x < roomSize; x++)
-                if (isInt(LevelList[levelPosX][levelPosY][y][x])) {
+                if (isInt(getRoom()[y][x])) {
                     System.out.println("adding a monster");
                     //orcs.add(new Monster(floor, x, y, levelPosX, levelPosY));
                     //TODO add a way to get monster type
-                    Monster_list.addMonster(LevelList[levelPosX][levelPosY][y][x], x, y);
+                    Monster_list.addMonster(getRoom()[y][x], x, y);
                 }
     }
 
-    private static void upDateLevel(){
+    private static void upDateLevel() {
 
-        if (LevelList[levelPosX][levelPosY][Player.posY][Player.posX] != '#') {
-            LevelList[levelPosX][levelPosY][Player.posY_Old][Player.posX_Old] = ' ';
+        if (getRoom()[Player.posY][Player.posX] != '#') {
+            getRoom()[Player.posY_Old][Player.posX_Old] = ' ';
 
-            if (LevelList[levelPosX][levelPosY][Player.posY][Player.posX] == 'F') {
-                Player.HP += Player.MaxHP * 0.1;
-                LevelList[levelPosX][levelPosY][Player.posY][Player.posX] = ' ';
-                if (Player.HP > Player.MaxHP)
-                    Player.HP = Player.MaxHP;
-            } else if (LevelList[levelPosX][levelPosY][Player.posY][Player.posX] == 'L') {
-                floor++;
-                LevelList[levelPosX][levelPosY][Player.posY][Player.posX] = ' ';
-                generateFloor();
-            } else if (LevelList[levelPosX][levelPosY][Player.posY][Player.posX] == 'A') {
-                Player.Attack += floor;
-                LevelList[levelPosX][levelPosY][Player.posY][Player.posX] = ' ';
-            } else if (LevelList[levelPosX][levelPosY][Player.posY][Player.posX] == '>') {
-                Player. Arrows += 3;
-                LevelList[levelPosX][levelPosY][Player.posY][Player.posX] = ' ';
-            } else if (LevelList[levelPosX][levelPosY][Player.posY][Player.posX] == 'D') {
-                Player.Armor++;
-                LevelList[levelPosX][levelPosY][Player.posY][Player.posX] = ' ';
-            }else if (LevelList[levelPosX][levelPosY][Player.posY][Player.posX] == 'T') {
-                LevelList[levelPosX][levelPosY][Player.posY][Player.posX] = ' ';
-                do{
-                    levelPosX =rando.nextInt(floorSize);
-                    levelPosX =rando.nextInt(floorSize);
-                    Player.posY=rando.nextInt(roomSize - 2) + 1;
-                    Player.posX=rando.nextInt(roomSize - 2) + 1;
-                }while(LevelList[levelPosX][levelPosY][Player.posY][Player.posX] != ' ');
-                enterRoom();
+            switch (getRoom()[Player.posY][Player.posX]) {
+                case 'F':
+                    Player.HP += Player.MaxHP * 0.1;
+                    getRoom()[Player.posY][Player.posX] = ' ';
+                    if (Player.HP > Player.MaxHP)
+                        Player.HP = Player.MaxHP;
+                    break;
+                case 'L':
+                    floor++;
+                    getRoom()[Player.posY][Player.posX] = ' ';
+                    generateFloor();
+                    break;
+                case 'A':
+                    Player.Attack += floor;
+                    getRoom()[Player.posY][Player.posX] = ' ';
+                    break;
+                case '>':
+                    Player.Arrows += 3;
+                    getRoom()[Player.posY][Player.posX] = ' ';
+                    break;
+                case 'D':
+                    Player.Armor++;
+                    getRoom()[Player.posY][Player.posX] = ' ';
+                    break;
+                case 'T':
+                    getRoom()[Player.posY][Player.posX] = ' ';
+                    do {
+                        levelPosX = rando.nextInt(floorSize);
+                        levelPosX = rando.nextInt(floorSize);
+                        Player.posY = rando.nextInt(roomSize - 2) + 1;
+                        Player.posX = rando.nextInt(roomSize - 2) + 1;
+                    } while (getRoom()[Player.posY][Player.posX] != ' ');
+                    enterRoom();
+                    break;
             }
 
             Monster_list.attackMonster(Player.posY, Player.posX);
@@ -234,58 +239,64 @@ public class Dungeon {
         } else {
             System.out.println("You cant move into a wall");
             Player.posY = Player.posY_Old;
-            Player.posX = Player. posX_Old;
+            Player.posX = Player.posX_Old;
         }
 
         //marks position of character
-        LevelList[levelPosX][levelPosY][ Player.posY][ Player.posX] = '@';
+        getRoom()[Player.posY][Player.posX] = '@';
 
         Monster_list.runMonsters();
 
-        printLevel(LevelList[levelPosX][levelPosY]);
+        printLevel(getRoom());
     }
 
     public static void userAction(String command) {
-            if (command.equals("w")) //up
-                if ( Player.posY == 0) {
-                    LevelList[levelPosX][levelPosY][ Player.posY_Old][Player.posX_Old] = ' ';
+        switch (command) {
+            case "w":
+//up
+                if (Player.posY == 0) {
+                    getRoom()[Player.posY_Old][Player.posX_Old] = ' ';
                     Player.posY = roomSize - 1;
                     Player.posY_Old = Player.posY;
                     levelPosY -= 1;
                     enterRoom();
                 } else
                     Player.posY--;
-
-            else if (command.equals("s"))//down
+                break;
+            case "s":
+//down
                 if (Player.posY == roomSize - 1) {
-                    LevelList[levelPosX][levelPosY][Player.posY_Old][ Player.posX_Old] = ' ';
-                    Player. posY = 0;
-                    Player. posY_Old = Player.posY;
+                    getRoom()[Player.posY_Old][Player.posX_Old] = ' ';
+                    Player.posY = 0;
+                    Player.posY_Old = Player.posY;
                     levelPosY += 1;
                     enterRoom();
                 } else
-                    Player. posY++;
-
-            else if (command.equals("a"))//left
+                    Player.posY++;
+                break;
+            case "a":
+//left
                 if (Player.posX == 0) {
-                    LevelList[levelPosX][levelPosY][Player.posY_Old][Player.posX_Old] = ' ';
+                    getRoom()[Player.posY_Old][Player.posX_Old] = ' ';
                     Player.posX = roomSize - 1;
-                    Player. posX_Old = Player.posX;
+                    Player.posX_Old = Player.posX;
                     levelPosX -= 1;
                     enterRoom();
                 } else
                     Player.posX--;
-
-            else if (command.equals("d"))//right
+                break;
+            case "d":
+//right
                 if (Player.posX == roomSize - 1) {
-                    LevelList[levelPosX][levelPosY][Player.posY_Old][Player.posX_Old] = ' ';
-                    Player. posX = 0;
-                    Player.  posX_Old = Player.posX;
+                    getRoom()[Player.posY_Old][Player.posX_Old] = ' ';
+                    Player.posX = 0;
+                    Player.posX_Old = Player.posX;
                     levelPosX += 1;
                     enterRoom();
                 } else
-                    Player. posX++;
-            else if (command.equals("shoot")) {
+                    Player.posX++;
+                break;
+            case "shoot":
                 if (Player.Arrows > 0) {
                     direction = scan.nextLine();
                     if (direction.equals("d") || direction.equals("a")) {
@@ -295,65 +306,68 @@ public class Dungeon {
                                 ArrowPos++;
                             else if (ArrowPos != 0)
                                 ArrowPos--;
-                            if (LevelList[levelPosX][levelPosY][Player.posY][ArrowPos] == ' ')
-                                LevelList[levelPosX][levelPosY][Player.posY][ArrowPos] = '-';
-                            printLevel(LevelList[levelPosX][levelPosY]);
+                            if (getRoom()[Player.posY][ArrowPos] == ' ')
+                                getRoom()[Player.posY][ArrowPos] = '-';
+                            printLevel(getRoom());
 
-                        } while (LevelList[levelPosX][levelPosY][ Player.posY][ArrowPos] == '-' && ArrowPos != 0 && ArrowPos != roomSize - 1);
+                        } while (getRoom()[Player.posY][ArrowPos] == '-' && ArrowPos != 0 && ArrowPos != roomSize - 1);
                         Monster_list.attackMonster(Player.posY, ArrowPos);
-                      //  attackMonster(posY, ArrowPos);
+                        //  attackMonster(posY, ArrowPos);
                     } else if (direction.equals("s") || direction.equals("w")) {
 
                         int ArrowPos = Player.posY;
                         do {
-                            if (LevelList[levelPosX][levelPosY][ArrowPos][Player.posX] != '@')
-                                LevelList[levelPosX][levelPosY][ArrowPos][Player.posX] = '|';
+                            if (getRoom()[ArrowPos][Player.posX] != '@')
+                                getRoom()[ArrowPos][Player.posX] = '|';
                             if (direction.equals("s") && ArrowPos != roomSize - 1)
                                 ArrowPos++;
                             else if (ArrowPos != 0)
                                 ArrowPos--;
-                            printLevel(LevelList[levelPosX][levelPosY]);
+                            printLevel(getRoom());
 
-                        } while (LevelList[levelPosX][levelPosY][ArrowPos][Player.posX] == ' ' || LevelList[levelPosX][levelPosY][ArrowPos][Player.posX] == '@' && ArrowPos != 0 && ArrowPos != roomSize - 1);
+                        }
+                        while (getRoom()[ArrowPos][Player.posX] == ' ' || getRoom()[ArrowPos][Player.posX] == '@' && ArrowPos != 0 && ArrowPos != roomSize - 1);
                         Monster_list.attackMonster(ArrowPos, Player.posX);
                     }
                     Player.Arrows--;
 
                     for (int a = 0; a < roomSize; a++)
                         for (int b = 0; b < roomSize; b++)
-                            if (LevelList[levelPosX][levelPosY][a][b] == '-' || LevelList[levelPosX][levelPosY][a][b] == '|')
-                                LevelList[levelPosX][levelPosY][a][b] = ' ';
+                            if (getRoom()[a][b] == '-' || getRoom()[a][b] == '|')
+                                getRoom()[a][b] = ' ';
                 } else {
                     System.out.println("You need arrows to shoot.");
                     direction = "q";
                 }
-            }
+                break;
             //cheater dev command
-            else if(command.equals("n"));
-
-            else if (command.equals("stop"))
+            case "n":
+                break;
+            case "stop":
                 qq = true;
-            else {
+                break;
+            default:
                 System.out.println("please input a valid command");
                 command = "q";
-            }
-            if(!command.equals("q"))
-                upDateLevel();
+                break;
+        }
+        if (!command.equals("q"))
+            upDateLevel();
     }
 
     public static boolean isInt(char character) {
         return (int) character >= 48 && (int) character <= 57;
     }
 
-    static public boolean isDead() {
-        return  Player.HP <= 0;
+    private static boolean isDead() {
+        return Player.HP <= 0;
     }
 
-    public static char[][] getRoom(){
+    public static char[][] getRoom() {
         return LevelList[levelPosX][levelPosY];
     }
 
-    public static void setPositionChar(int Y,int X, char looks){
-        LevelList[levelPosX][levelPosY][Y][X]=looks;
+    public static void setPositionChar(int Y, int X, char looks) {
+        getRoom()[Y][X] = looks;
     }
 }
