@@ -1,6 +1,7 @@
 public class Archer extends Monster {
-    public Archer(int x, int y, char type) {
-        super(x, y, type);
+    public Archer(int x, int y) {
+        super(x, y);
+        looks = '1';
     }
     private boolean hasShot;
     @Override

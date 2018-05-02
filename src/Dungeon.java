@@ -11,12 +11,14 @@ import java.util.Random;
 import java.util.Scanner;
 
 class Dungeon {
-    public static int roomSize = 8;
+    public static int roomSize = 4;
     static int floor = 1;
     static int killCount;
     private static Random rando = new Random();
+
     private static int levelPosX;
     private static int levelPosY;
+
     private static String direction;
     private static Scanner scan = new Scanner(System.in);
     private static int floorSize = 2;
@@ -36,6 +38,7 @@ class Dungeon {
         Player.posY_Old = Player.posY;
 
         generateFloor();
+        printFloor();
 
         //prints room and player
         getRoom()[Player.posY][Player.posX] = '@';
@@ -56,12 +59,12 @@ class Dungeon {
         System.out.println("Thanks for playing");
     }
 
-    private static void printLevel(char[][] a) {
+    public static void printLevel(char[][] a) {
         String text = "<html><font size=\"5\"><p style=\"font-family:'Courier New', Courier, monospace\">";
         text += "HP:" + Player.HP + '/' + Player.MaxHP + " Attack:" + Player.Attack + " Armor: " + Player.Armor + " Arrows: " + Player.Arrows + " Room: (" + levelPosX + ',' + levelPosY + ") Floor:" + floor + " <br/> ";
         System.out.println("HP:" + Player.HP + '/' + Player.MaxHP + " Attack:" + Player.Attack + " Armor: " + Player.Armor + " Arrows: " + Player.Arrows + " Room: (" + levelPosX + ',' + levelPosY + ") Floor:" + floor);
-        for (char[] anA : a) {
-            System.out.println(Arrays.toString(anA));
+        for (char[] array : a) {
+            System.out.println(Arrays.toString(array));
             //text+=Arrays.toString(a[i])+"<br/>";
         }
         for (int y = 0; y < roomSize; y++) {
@@ -77,12 +80,26 @@ class Dungeon {
             text += " <br/> ";
         }
 
+
         text += "</p></font></html>";
         //System.out.println(text);
 
         DungeonGUI.map.setText(text);
     }
+    public static void printFloor() {
+        System.out.println();
+        for(int x2=0;x2<floorSize;x2++) {
+            for (int y1 = 0; y1 < roomSize; y1++) {
+                for (int y2 = 0; y2 < floorSize; y2++) {
+                    System.out.print(Arrays.toString(LevelList[x2][y2][y1]));
+                    System.out.print("  ");
+                }
+                System.out.println();
+            }
+            System.out.println();
+        }
 
+    }
     private static void generateFloor() {
         //Fills every level with  ' '.
         for (int a = 0; a < floorSize; a++)
@@ -135,7 +152,7 @@ class Dungeon {
             for (int b = 0; b < floorSize; b++) {
                 if (a != levelPosX || b != levelPosY)
                     for (int w = rando.nextInt(5); w > 0; w--) {
-                        LevelList[a][b][rando.nextInt(roomSize - 2) + 1][rando.nextInt(roomSize - 2) + 1] = '0';
+                        LevelList[a][b][rando.nextInt(roomSize - 2) + 1][rando.nextInt(roomSize - 2) + 1] = (char)(rando.nextInt(2)+47);
                     }
             }
         //generates all objects such as food and arrows
@@ -149,22 +166,16 @@ class Dungeon {
                     LevelList[a][b][rando.nextInt(roomSize - 2) + 1][rando.nextInt(roomSize - 2) + 1] = '>';
                 else if (rando.nextInt(5) == 0)
                     LevelList[a][b][rando.nextInt(roomSize - 2) + 1][rando.nextInt(roomSize - 2) + 1] = 'D';
-                else if (rando.nextInt(3) == 0) ;
+                else if (rando.nextInt(2) == 0)
                 LevelList[a][b][rando.nextInt(roomSize - 2) + 1][rando.nextInt(roomSize - 2) + 1] = 'T';
             }
-
-        int w = rando.nextInt(floorSize);
-        int v = rando.nextInt(floorSize);
-
-        LevelList[w][v][rando.nextInt(roomSize - 2) + 1][rando.nextInt(roomSize - 2) + 1] = 'L';
-        //System.out.println("x "+w);
-        //System.out.println("y "+v);
+            LevelList[rando.nextInt(floorSize)][rando.nextInt(floorSize)][rando.nextInt(roomSize - 2) + 1][rando.nextInt(roomSize - 2) + 1] = 'L';
 
         //creating  test objects
-        LevelList[1][0][3][4] = 'L';
-        LevelList[1][0][4][4] = 'F';
-        LevelList[0][1][2][4] = '2';
-        LevelList[1][0][4][4] = '1';
+//        LevelList[1][0][3][4] = 'L';
+//        LevelList[1][0][4][4] = 'F';
+//        LevelList[1][1][2][4] = '2';
+//        LevelList[1][0][4][4] = '1';
 
         //updates player stats
         if (floor != 1) {
@@ -204,20 +215,16 @@ class Dungeon {
                     break;
                 case 'L':
                     floor++;
-                    getRoom()[Player.posY][Player.posX] = ' ';
                     generateFloor();
                     break;
                 case 'A':
                     Player.Attack += floor;
-                    getRoom()[Player.posY][Player.posX] = ' ';
                     break;
                 case '>':
                     Player.Arrows += 3;
-                    getRoom()[Player.posY][Player.posX] = ' ';
                     break;
                 case 'D':
                     Player.Armor++;
-                    getRoom()[Player.posY][Player.posX] = ' ';
                     break;
                 case 'T':
                     getRoom()[Player.posY][Player.posX] = ' ';
@@ -241,13 +248,13 @@ class Dungeon {
             Player.posY = Player.posY_Old;
             Player.posX = Player.posX_Old;
         }
-
         //marks position of character
         getRoom()[Player.posY][Player.posX] = '@';
 
-        Monster_list.runMonsters();
-
+        //Monster_list.runMonsters();
+        printFloor();
         printLevel(getRoom());
+
     }
 
     public static void userAction(String command) {

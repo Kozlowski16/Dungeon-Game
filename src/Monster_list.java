@@ -10,13 +10,13 @@ class Monster_list {
     public static void addMonster(char type, int X, int Y) {
         switch (type){
             case '0':
-            	Monster.add(new Orc(X, Y, type));
+            	Monster.add(new Orc(X, Y));
                 break;
             case '1':
-            	Monster.add(new Archer(X, Y, type));
+            	Monster.add(new Archer(X, Y));
                 break;
             case '2':
-                Monster.add(new Spear(X, Y, type));
+                Monster.add(new Spear(X, Y));
                 break;
         }
     }

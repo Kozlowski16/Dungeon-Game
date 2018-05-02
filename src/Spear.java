@@ -1,41 +1,63 @@
 public class Spear extends Monster {
-    public Spear(int x, int y, char type) {
-        super(x, y, type);
-        // TODO Auto-generated constructor stub
+    public Spear(int x, int y) {
+        super(x, y);
+        looks = '2';
     }
     @Override
     protected void moveX() {
-        System.out.println("Player Posx- Monster posX: " + (Player.posX - posX));
-        if (Player.posX < posX){
-            if (Player.posX - posX == -2) ;
-            else if (Player.posX - posX == -1)
-                posX++;
-            else
+        if(posX!=Player.posX-2 && posX != Player.posX+2)
+            if (posX > Player.posX + 2)
                 posX--;
-        }
-        else
-            if (Player.posX - posX == 2) ;
-            else if (Player.posX - posX == 1)
-                posX--;
-            else
+            else if (posX > Player.posX)
                 posX++;
+            else if (posX < Player.posX - 2)
+                posX++;
+            else if (posX < Player.posX)
+                posX--;
     }
     @Override
     protected void moveY() {
-        System.out.println("Player PosY- Monster posY: " + (Player.posY - posY));
-        if (Player.posY < posY){
-            if (Player.posY - posY == -2) ;
-            else if (Player.posY - posY == -1)
-                posY++;
-            else
+        if(posY!=Player.posY-2 && posY != Player.posY+2)
+            if (posY > Player.posY + 2)
                 posY--;
+            else if (posY > Player.posY)
+                posY++;
+            else if (posY < Player.posY - 2)
+                posY++;
+            else if (posY < Player.posY)
+                posY--;
+    }
+    @Override
+    protected void move(){
+        old_posY = posY;
+        old_posX = posX;
+        Dungeon.getRoom()[posY][posX] = ' ';
+        //if only y is different
+        if(Player.posX == posX && Player.posY != posY)
+            moveY();
+
+        if(posX != Player.posX && posY == Player.posY)
+            moveX();
+
+        if(posX != Player.posX && posY != Player.posY){
+            int difX = Math.min(Math.abs(posX-Player.posX-2),Math.abs(posX-Player.posX+2));
+            int difY = Math.min(Math.abs(posY-Player.posY-2),Math.abs(posY-Player.posY+2));
+
+            if(difX>difY)
+                super.moveX();
+            else if(difX<difY)
+                super.moveY();
+            //rolls to see if x or y changes and changes it
+            else if (rando.nextInt(2) == 1)
+                super.moveX();
+            else
+                super.moveY();
         }
-        else
-        if (Player.posY - posY == 2) ;
-        else if (Player.posY - posY == 1)
-            posY--;
-        else
-            posY++;
+        if (Dungeon.getRoom()[posY][posX] != ' ') {
+            posY = old_posY;
+            posX = old_posX;
+        }
+        Dungeon.getRoom()[posY][posX] = looks;
     }
 
     @Override

@@ -1,9 +1,9 @@
 
 public class Orc extends Monster {
 
-    public Orc(int x, int y, char type) {
-        super(x, y, type);
-        // TODO Auto-generated constructor stub
+    public Orc(int x, int y ) {
+        super(x, y);
+        looks = '0';
     }
 
     @Override

@@ -10,13 +10,12 @@ public abstract class Monster {
     protected char looks;
     Random rando = new Random();
 
-    public Monster(int x, int y, char type) {
+    public Monster(int x, int y) {
 
         Attack = (int) (4 + Dungeon.floor * 1.1);
         HP = (int) ((8 + Math.pow(Dungeon.floor, 1.4)) * 2);
         posX = x;
         posY = y;
-        looks = type;
         System.out.println("looks: " + looks);
         old_posY = posY;
         old_posX = posX;
@@ -37,7 +36,7 @@ public abstract class Monster {
             posY++;
     }
 
-    public void move() {
+    protected void move() {
         old_posY = posY;
         old_posX = posX;
         Dungeon.getRoom()[posY][posX] = ' ';
