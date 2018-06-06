@@ -20,7 +20,6 @@ public class Orc extends Monster {
     public void action() {
         attack();
         move();
-        System.out.println("orcs ran " + getX() + " " + getY());
     }
 
 }

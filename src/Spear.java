@@ -53,7 +53,7 @@ public class Spear extends Monster {
             else
                 super.moveY();
         }
-        if (Dungeon.getRoom()[posY][posX] != ' ') {
+        if (posX<0 || posX>=Dungeon.roomSize || posY<0 || posY>=Dungeon.roomSize || Dungeon.getRoom()[posY][posX] != ' ') {
             posY = old_posY;
             posX = old_posX;
         }
@@ -72,7 +72,6 @@ public class Spear extends Monster {
     public void action() {
         attack();
         move();
-        System.out.println("Spear ran " + getX() + " " + getY());
     }
 
 }

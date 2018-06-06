@@ -1,5 +1,5 @@
 /*TODO
- * Comment code better
+
  * balence the game
  * more types of monsters
  * better monster randimizer
@@ -11,7 +11,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 class Dungeon {
-    public static int roomSize = 4;
+    public static int roomSize = 8;
     static int floor = 1;
     static int killCount;
     private static Random rando = new Random();
@@ -38,10 +38,11 @@ class Dungeon {
         Player.posY_Old = Player.posY;
 
         generateFloor();
+        getRoom()[Player.posY][Player.posX] = '@';
+
         printFloor();
 
-        //prints room and player
-        getRoom()[Player.posY][Player.posX] = '@';
+        //prints room
         printLevel(getRoom());
 
         while (true) {
@@ -55,7 +56,7 @@ class Dungeon {
         int score;
         score = killCount * floor;
         System.out.println("Game Over");
-        System.out.println("orcs killed: " + killCount + ", Floor: " + floor + " Score: " + score);
+        System.out.println("Monsters killed: " + killCount + ", Floor: " + floor + " Score: " + score);
         System.out.println("Thanks for playing");
     }
 
@@ -79,14 +80,12 @@ class Dungeon {
             }
             text += " <br/> ";
         }
-
-
         text += "</p></font></html>";
         //System.out.println(text);
 
         DungeonGUI.map.setText(text);
     }
-    public static void printFloor() {
+    private static void printFloor() {
         System.out.println();
         for(int x2=0;x2<floorSize;x2++) {
             for (int y1 = 0; y1 < roomSize; y1++) {
@@ -98,7 +97,6 @@ class Dungeon {
             }
             System.out.println();
         }
-
     }
     private static void generateFloor() {
         //Fills every level with  ' '.
@@ -116,43 +114,33 @@ class Dungeon {
             door2 = (int) door1;
 
         //Fills in walls of each level
-        for (int a = 0; a < floorSize; a++)
-            for (int b = 0; b < floorSize; b++) {
+        for (int y = 0; y < floorSize; y++)
+            for (int x = 0; x < floorSize; x++)
 
                 //fills north wall
-                for (int i = 0; i < roomSize; i++)
-                    if (b == 0)
-                        LevelList[a][b][0][i] = '#';
-                    else if (i != door1 && i != door2)
-                        LevelList[a][b][0][i] = '#';
+                for (int i = 0; i < roomSize; i++) {
+                    if (y == 0 || i != door1 && i != door2)
+                        LevelList[y][x][0][i] = '#';
 
-                //fills west wall
-                for (int i = 0; i < roomSize; i++)
-                    if (a == 0)
-                        LevelList[a][b][i][0] = '#';
-                    else if (i != door1 && i != door2)
-                        LevelList[a][b][i][0] = '#';
+                    //fills west wall
+                    if (x == 0 || i != door1 && i != door2)
+                        LevelList[y][x][i][0] = '#';
 
-                //fill south wall
-                for (int i = 0; i < roomSize; i++)
-                    if (b == floorSize - 1)
-                        LevelList[a][b][roomSize - 1][i] = '#';
-                    else if (i != door1 && i != door2)
-                        LevelList[a][b][roomSize - 1][i] = '#';
+                    //fill south wall
+                    if (y == floorSize - 1 || i != door1 && i != door2)
+                        LevelList[y][x][roomSize - 1][i] = '#';
 
-                //fills east wall
-                for (int i = 0; i < roomSize; i++)
-                    if (a == floorSize - 1)
-                        LevelList[a][b][i][roomSize - 1] = '#';
-                    else if (i != door1 && i != door2)
-                        LevelList[a][b][i][roomSize - 1] = '#';
-            }
+                    //fills east wall
+                    if (x == floorSize - 1 || i != door1 && i != door2)
+                        LevelList[y][x][i][roomSize - 1] = '#';
+
+                }
         //Create monster randomly
         for (int a = 0; a < floorSize; a++)
             for (int b = 0; b < floorSize; b++) {
                 if (a != levelPosX || b != levelPosY)
                     for (int w = rando.nextInt(5); w > 0; w--) {
-                        LevelList[a][b][rando.nextInt(roomSize - 2) + 1][rando.nextInt(roomSize - 2) + 1] = (char)(rando.nextInt(2)+47);
+                        LevelList[a][b][rando.nextInt(roomSize - 2) + 1][rando.nextInt(roomSize - 2) + 1] = (char)(rando.nextInt(3)+48);
                     }
             }
         //generates all objects such as food and arrows
@@ -190,13 +178,11 @@ class Dungeon {
     private static void enterRoom() {
         //clears monsters
         Monster_list.clear();
-        //checks every spot in room and adds integers to orcs array
+        //checks every spot in room and adds integers to monster array
         for (int y = 0; y < roomSize; y++)
             for (int x = 0; x < roomSize; x++)
                 if (isInt(getRoom()[y][x])) {
                     System.out.println("adding a monster");
-                    //orcs.add(new Monster(floor, x, y, levelPosX, levelPosY));
-                    //TODO add a way to get monster type
                     Monster_list.addMonster(getRoom()[y][x], x, y);
                 }
     }
@@ -209,7 +195,6 @@ class Dungeon {
             switch (getRoom()[Player.posY][Player.posX]) {
                 case 'F':
                     Player.HP += Player.MaxHP * 0.1;
-                    getRoom()[Player.posY][Player.posX] = ' ';
                     if (Player.HP > Player.MaxHP)
                         Player.HP = Player.MaxHP;
                     break;
@@ -230,17 +215,18 @@ class Dungeon {
                     getRoom()[Player.posY][Player.posX] = ' ';
                     do {
                         levelPosX = rando.nextInt(floorSize);
-                        levelPosX = rando.nextInt(floorSize);
+                        levelPosY = rando.nextInt(floorSize);
                         Player.posY = rando.nextInt(roomSize - 2) + 1;
                         Player.posX = rando.nextInt(roomSize - 2) + 1;
                     } while (getRoom()[Player.posY][Player.posX] != ' ');
                     enterRoom();
                     break;
             }
-
-            Monster_list.attackMonster(Player.posY, Player.posX);
-
-
+            if (Dungeon.isInt(Dungeon.getRoom()[Player.posY][Player.posX])) {
+                Monster_list.attackMonster(Player.posY, Player.posX);
+                Player.posY = Player.posY_Old;
+                Player.posX = Player.posX_Old;
+            }
             Player.posX_Old = Player.posX;
             Player.posY_Old = Player.posY;
         } else {
@@ -251,10 +237,9 @@ class Dungeon {
         //marks position of character
         getRoom()[Player.posY][Player.posX] = '@';
 
-        //Monster_list.runMonsters();
+        Monster_list.runMonsters();
         printFloor();
         printLevel(getRoom());
-
     }
 
     public static void userAction(String command) {
@@ -362,7 +347,7 @@ class Dungeon {
             upDateLevel();
     }
 
-    public static boolean isInt(char character) {
+    private static boolean isInt(char character) {
         return (int) character >= 48 && (int) character <= 57;
     }
 
@@ -371,7 +356,7 @@ class Dungeon {
     }
 
     public static char[][] getRoom() {
-        return LevelList[levelPosX][levelPosY];
+        return LevelList[levelPosY][levelPosX];
     }
 
     public static void setPositionChar(int Y, int X, char looks) {

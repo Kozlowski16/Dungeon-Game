@@ -14,29 +14,35 @@ public class DungeonGUI extends JFrame {
 
     }
     private class Buttons extends JPanel{
+        private JCheckBox shootCheckBox;
 
 		private static final long serialVersionUID = 1L;
-
+        private String shoot(){
+            return shootCheckBox.isSelected() ? "s":"";
+        }
 		Buttons(){
+		    shootCheckBox = new JCheckBox("shoot");
+            shootCheckBox.setBounds(55*2,5*2,20*2,20*2);
+
             setLayout(null);
             setBackground(Color.LIGHT_GRAY);
             setBounds(10,10,160,110);
             JButton upButton= new JButton("W");
             upButton.setBounds(30*2,5*2,20*2,20*2);
-            upButton.addActionListener(e -> Dungeon.userAction("w"));
+            upButton.addActionListener(e -> Dungeon.userAction(shoot()+"w"));
 
 
             JButton downButton= new JButton("S");
             downButton.setBounds(30*2,30*2,20*2,20*2);
-            downButton.addActionListener(e -> Dungeon.userAction("s"));
+            downButton.addActionListener(e -> Dungeon.userAction(shoot()+"s"));
 
             JButton leftButton= new JButton("A");
             leftButton.setBounds(5*2,30*2,20*2,20*2);
-            leftButton.addActionListener(e -> Dungeon.userAction("a"));
+            leftButton.addActionListener(e -> Dungeon.userAction(shoot()+"a"));
 
             JButton rightButton= new JButton("D");
             rightButton.setBounds(55*2,30*2,20*2,20*2);
-            rightButton.addActionListener(e -> Dungeon.userAction("d"));
+            rightButton.addActionListener(e -> Dungeon.userAction(shoot()+"d"));
 
             JButton waitButton= new JButton("N");
             waitButton.setBounds(5*2,5*2,20*2,20*2);
@@ -45,7 +51,8 @@ public class DungeonGUI extends JFrame {
             JButton monsterButton= new JButton("M");
             monsterButton.setBounds(55*2,5*2,20*2,20*2);
             monsterButton.addActionListener(e -> {Monster_list.runMonsters();Dungeon.printLevel(Dungeon.getRoom());});
-            add(monsterButton);
+            //add(monsterButton);
+            add(shootCheckBox);
             add(upButton);
             add(downButton);
             add(leftButton);
@@ -56,7 +63,7 @@ public class DungeonGUI extends JFrame {
     }
 
     public DungeonGUI()  {
-        setSize(350, 500);
+        setSize(400, 500);
         //setLocationRelativeTo(null);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 

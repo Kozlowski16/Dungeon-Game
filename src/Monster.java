@@ -16,7 +16,6 @@ public abstract class Monster {
         HP = (int) ((8 + Math.pow(Dungeon.floor, 1.4)) * 2);
         posX = x;
         posY = y;
-        System.out.println("looks: " + looks);
         old_posY = posY;
         old_posX = posX;
         armor = 1;
@@ -42,7 +41,6 @@ public abstract class Monster {
         Dungeon.getRoom()[posY][posX] = ' ';
         //if both x and y are different
         if (Player.posX != posX && Player.posY != posY) {
-            //System.out.println("none");
             //rolls to see if x or y changes and changes it
             if (rando.nextInt(2) == 1)
                 moveX();
@@ -56,7 +54,7 @@ public abstract class Monster {
             moveX();
         }
 
-        if (Dungeon.getRoom()[posY][posX] != ' ') {
+        if (posX<0 || posX>=Dungeon.roomSize || posY<0 || posY>=Dungeon.roomSize || Dungeon.getRoom()[posY][posX] != ' ') {
             posY = old_posY;
             posX = old_posX;
         }

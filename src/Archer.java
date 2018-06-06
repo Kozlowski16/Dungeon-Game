@@ -49,6 +49,5 @@ public class Archer extends Monster {
         if(!hasShot)
             move();
         hasShot=false;
-        System.out.println("Archer ran " + getX() + " " + getY());
     }
 }
