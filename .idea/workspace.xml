@@ -2,16 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9623da1d-7043-4c5d-b646-c8347ab57ae6" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/KeyInput.java" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/src/Archer.java" afterPath="$PROJECT_DIR$/src/Archer.java" />
+      <change beforePath="$PROJECT_DIR$/bin/Dungeon.class" afterPath="$PROJECT_DIR$/bin/Dungeon.class" />
+      <change beforePath="$PROJECT_DIR$/bin/Monster_list.class" afterPath="$PROJECT_DIR$/bin/Monster_list.class" />
+      <change beforePath="$PROJECT_DIR$/bin/Player.class" afterPath="$PROJECT_DIR$/bin/Player.class" />
       <change beforePath="$PROJECT_DIR$/src/Dungeon.java" afterPath="$PROJECT_DIR$/src/Dungeon.java" />
-      <change beforePath="$PROJECT_DIR$/src/DungeonGUI.java" afterPath="$PROJECT_DIR$/src/DungeonGUI.java" />
-      <change beforePath="$PROJECT_DIR$/src/Monster.java" afterPath="$PROJECT_DIR$/src/Monster.java" />
-      <change beforePath="$PROJECT_DIR$/src/Monster_list.java" afterPath="$PROJECT_DIR$/src/Monster_list.java" />
-      <change beforePath="$PROJECT_DIR$/src/Orc.java" afterPath="$PROJECT_DIR$/src/Orc.java" />
-      <change beforePath="$PROJECT_DIR$/src/Player.java" afterPath="$PROJECT_DIR$/src/Player.java" />
-      <change beforePath="$PROJECT_DIR$/src/Spear.java" afterPath="$PROJECT_DIR$/src/Spear.java" />
     </list>
     <ignored path="$PROJECT_DIR$/bin/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -26,11 +21,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Dungeon.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Dungeon.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Dungeon.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="27" column="68" lean-forward="false" selection-start-line="27" selection-start-column="68" selection-end-line="27" selection-end-column="68" />
+            <state relative-caret-position="119">
+              <caret line="19" column="33" lean-forward="true" selection-start-line="19" selection-start-column="33" selection-end-line="19" selection-end-column="33" />
               <folding>
                 <element signature="e#0#14557#0" expanded="true" />
                 <element signature="imports" expanded="true" />
@@ -77,11 +72,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="KeyInput.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="KeyInput.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/KeyInput.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="8" column="5" lean-forward="true" selection-start-line="8" selection-start-column="5" selection-end-line="9" selection-end-column="0" />
+            <state relative-caret-position="204">
+              <caret line="12" column="5" lean-forward="true" selection-start-line="12" selection-start-column="5" selection-end-line="12" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#198#199#0" expanded="true" />
@@ -468,7 +463,14 @@
       <option name="project" value="LOCAL" />
       <updated>1528246641142</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary=" Added KeyPress input. moved main method to a constructor. removed buttons">
+      <created>1528331662884</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1528331662884</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -515,7 +517,8 @@
     <MESSAGE value="Did litle work on gui" />
     <MESSAGE value="Made variabkles private" />
     <MESSAGE value="Added printLevel/cleaned up code" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added printLevel/cleaned up code" />
+    <MESSAGE value=" Added KeyPress input. moved main method to a constructor. removed buttons" />
+    <option name="LAST_COMMIT_MESSAGE" value=" Added KeyPress input. moved main method to a constructor. removed buttons" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -913,10 +916,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/KeyInput.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="12" column="5" lean-forward="true" selection-start-line="12" selection-start-column="5" selection-end-line="12" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#198#199#0" expanded="true" />
+            <element signature="e#219#220#0" expanded="true" />
+            <element signature="e#248#249#0" expanded="true" />
+            <element signature="e#296#297#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Dungeon.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="27" column="68" lean-forward="false" selection-start-line="27" selection-start-column="68" selection-end-line="27" selection-end-column="68" />
+        <state relative-caret-position="119">
+          <caret line="19" column="33" lean-forward="true" selection-start-line="19" selection-start-column="33" selection-end-line="19" selection-end-column="33" />
           <folding>
             <element signature="e#0#14557#0" expanded="true" />
             <element signature="imports" expanded="true" />
@@ -934,20 +951,6 @@
             <element signature="e#14486#14487#0" expanded="true" />
             <element signature="e#14524#14525#0" expanded="true" />
             <element signature="e#14553#14554#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/KeyInput.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="5" lean-forward="true" selection-start-line="8" selection-start-column="5" selection-end-line="9" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#198#199#0" expanded="true" />
-            <element signature="e#219#220#0" expanded="true" />
-            <element signature="e#248#249#0" expanded="true" />
-            <element signature="e#296#297#0" expanded="true" />
           </folding>
         </state>
       </provider>
