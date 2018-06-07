@@ -8,12 +8,12 @@ public class Orc extends Monster {
 
     @Override
     public void attack() {
-        if (Player.posX + 1 == posX || Player.posX - 1 == posX)
-            if (Player.posY == posY)
-                Player.HP -= Attack - rando.nextInt(Player.Armor + 1);
-        if (Player.posY + 1 == posY || Player.posY - 1 == posY)
-            if (Player.posX == posX)
-                Player.HP =  Player.HP - Attack + rando.nextInt( Player.Armor + 1);
+        if (Dungeon.getPlayer().posX + 1 == posX || Dungeon.getPlayer().posX - 1 == posX)
+            if (Dungeon.getPlayer().posY == posY)
+                Dungeon.getPlayer().HP -= Attack - rando.nextInt(Dungeon.getPlayer().Armor + 1);
+        if (Dungeon.getPlayer().posY + 1 == posY || Dungeon.getPlayer().posY - 1 == posY)
+            if (Dungeon.getPlayer().posX == posX)
+                Dungeon.getPlayer().HP =  Dungeon.getPlayer().HP - Attack + rando.nextInt( Dungeon.getPlayer().Armor + 1);
     }
 
     @Override

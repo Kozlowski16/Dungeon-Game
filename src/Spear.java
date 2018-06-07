@@ -5,26 +5,26 @@ public class Spear extends Monster {
     }
     @Override
     protected void moveX() {
-        if(posX!=Player.posX-2 && posX != Player.posX+2)
-            if (posX > Player.posX + 2)
+        if(posX!=Dungeon.getPlayer().posX-2 && posX != Dungeon.getPlayer().posX+2)
+            if (posX > Dungeon.getPlayer().posX + 2)
                 posX--;
-            else if (posX > Player.posX)
+            else if (posX > Dungeon.getPlayer().posX)
                 posX++;
-            else if (posX < Player.posX - 2)
+            else if (posX < Dungeon.getPlayer().posX - 2)
                 posX++;
-            else if (posX < Player.posX)
+            else if (posX < Dungeon.getPlayer().posX)
                 posX--;
     }
     @Override
     protected void moveY() {
-        if(posY!=Player.posY-2 && posY != Player.posY+2)
-            if (posY > Player.posY + 2)
+        if(posY!=Dungeon.getPlayer().posY-2 && posY != Dungeon.getPlayer().posY+2)
+            if (posY > Dungeon.getPlayer().posY + 2)
                 posY--;
-            else if (posY > Player.posY)
+            else if (posY > Dungeon.getPlayer().posY)
                 posY++;
-            else if (posY < Player.posY - 2)
+            else if (posY < Dungeon.getPlayer().posY - 2)
                 posY++;
-            else if (posY < Player.posY)
+            else if (posY < Dungeon.getPlayer().posY)
                 posY--;
     }
     @Override
@@ -33,15 +33,15 @@ public class Spear extends Monster {
         old_posX = posX;
         Dungeon.getRoom()[posY][posX] = ' ';
         //if only y is different
-        if(Player.posX == posX && Player.posY != posY)
+        if(Dungeon.getPlayer().posX == posX && Dungeon.getPlayer().posY != posY)
             moveY();
 
-        if(posX != Player.posX && posY == Player.posY)
+        if(posX != Dungeon.getPlayer().posX && posY == Dungeon.getPlayer().posY)
             moveX();
 
-        if(posX != Player.posX && posY != Player.posY){
-            int difX = Math.min(Math.abs(posX-Player.posX-2),Math.abs(posX-Player.posX+2));
-            int difY = Math.min(Math.abs(posY-Player.posY-2),Math.abs(posY-Player.posY+2));
+        if(posX != Dungeon.getPlayer().posX && posY != Dungeon.getPlayer().posY){
+            int difX = Math.min(Math.abs(posX-Dungeon.getPlayer().posX-2),Math.abs(posX-Dungeon.getPlayer().posX+2));
+            int difY = Math.min(Math.abs(posY-Dungeon.getPlayer().posY-2),Math.abs(posY-Dungeon.getPlayer().posY+2));
 
             if(difX>difY)
                 super.moveX();
@@ -62,10 +62,11 @@ public class Spear extends Monster {
 
     @Override
     public void attack() {
-        if ((Player.posX + 2 == posX || Player.posX - 2 == posX)&&Player.posY == posY)
-            Player.HP -= Attack - rando.nextInt(Player.Armor + 1);
-        else if ((Player.posY + 2 == posY || Player.posY - 2 == posY)&&Player.posX == posX)
-            Player.HP =  Player.HP - Attack + rando.nextInt( Player.Armor + 1);
+        if ((Dungeon.getPlayer().posX + 2 == posX || Dungeon.getPlayer().posX - 2 == posX)&&Dungeon.getPlayer().posY == posY)
+            Dungeon.getPlayer().HP -= Attack - rando.nextInt(Dungeon.getPlayer().Armor + 1);
+
+        else if ((Dungeon.getPlayer().posY + 2 == posY || Dungeon.getPlayer().posY - 2 == posY)&&Dungeon.getPlayer().posX == posX)
+            Dungeon.getPlayer().HP =  Dungeon.getPlayer().HP - Attack + rando.nextInt( Dungeon.getPlayer().Armor + 1);
     }
 
     @Override

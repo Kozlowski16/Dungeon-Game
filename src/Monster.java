@@ -22,14 +22,14 @@ public abstract class Monster {
     }
 
     protected void moveX() {
-        if (Player.posX < posX)
+        if (Dungeon.getPlayer().posX < posX)
             posX--;
         else
             posX++;
     }
 
     protected void moveY() {
-        if (Player.posY < posY)
+        if (Dungeon.getPlayer().posY < posY)
             posY--;
         else
             posY++;
@@ -40,7 +40,7 @@ public abstract class Monster {
         old_posX = posX;
         Dungeon.getRoom()[posY][posX] = ' ';
         //if both x and y are different
-        if (Player.posX != posX && Player.posY != posY) {
+        if (Dungeon.getPlayer().posX != posX && Dungeon.getPlayer().posY != posY) {
             //rolls to see if x or y changes and changes it
             if (rando.nextInt(2) == 1)
                 moveX();
@@ -48,9 +48,9 @@ public abstract class Monster {
                 moveY();
         }
         // if x values are equal but not y
-        else if (Player.posX == posX && Player.posY != posY) {
+        else if (Dungeon.getPlayer().posX == posX && Dungeon.getPlayer().posY != posY) {
             moveY();
-        } else if (Player.posX != posX && Player.posY == posY) {
+        } else if (Dungeon.getPlayer().posX != posX && Dungeon.getPlayer().posY == posY) {
             moveX();
         }
 

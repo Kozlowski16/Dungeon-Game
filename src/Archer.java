@@ -6,10 +6,10 @@ public class Archer extends Monster {
     private boolean hasShot;
     @Override
    public void attack() {
-        if (posY==Player.posY) {
+        if (posY==Dungeon.getPlayer().posY) {
             int ArrowPos = posX;
             do {
-                if (ArrowPos>Player.posX && ArrowPos != Dungeon.roomSize - 1)
+                if (ArrowPos>Dungeon.getPlayer().posX && ArrowPos != Dungeon.roomSize - 1)
                     ArrowPos--;
                 else if (ArrowPos != 0 )
                     ArrowPos++;
@@ -17,15 +17,15 @@ public class Archer extends Monster {
                     Dungeon.getRoom()[posY][ArrowPos] = '-';
                // Dungeon.printLevel(Dungeon.getRoom());
 
-            } while (Dungeon.getRoom()[ Player.posY][ArrowPos] == '-' && ArrowPos != Dungeon.roomSize - 1 && ArrowPos != 0);
-            if(Dungeon.getRoom()[ Player.posY][ArrowPos] =='@')
-                Player.HP=Player.HP-Attack +Player.Armor;
+            } while (Dungeon.getRoom()[ Dungeon.getPlayer().posY][ArrowPos] == '-' && ArrowPos != Dungeon.roomSize - 1 && ArrowPos != 0);
+            if(Dungeon.getRoom()[ Dungeon.getPlayer().posY][ArrowPos] =='@')
+                Dungeon.getPlayer().HP=Dungeon.getPlayer().HP-Attack +Dungeon.getPlayer().Armor;
             hasShot=true;
-        } else if (posX==Player.posX) {
+        } else if (posX==Dungeon.getPlayer().posX) {
             int ArrowPos = posY;
             do {
 
-                if (ArrowPos>Player.posY && ArrowPos != Dungeon.roomSize - 1)
+                if (ArrowPos>Dungeon.getPlayer().posY && ArrowPos != Dungeon.roomSize - 1)
                     ArrowPos--;
                 else if (ArrowPos != 0)
                     ArrowPos++;
@@ -35,7 +35,7 @@ public class Archer extends Monster {
 
             } while (Dungeon.getRoom()[ArrowPos][posX] == '|' && ArrowPos != Dungeon.roomSize - 1 && ArrowPos != 0);
             if(Dungeon.getRoom()[ArrowPos][posX] =='@')
-                Player.HP=Player.HP-Attack +Player.Armor;
+                Dungeon.getPlayer().HP=Dungeon.getPlayer().HP-Attack +Dungeon.getPlayer().Armor;
             hasShot=true;
         }
         for (int a = 0; a < Dungeon.roomSize; a++)
