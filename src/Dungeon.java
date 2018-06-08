@@ -43,14 +43,13 @@ class Dungeon {
         getRoom()[player.posY][player.posX] = '@';
 
         printFloor();
-
-        //prints room
         printLevel(getRoom());
     }
     public static void main(String[] args) {
         new Dungeon();
     }
     public void reset(){
+        GUI.removeMap();
         player.reset();
 
         levelPosX = floorSize / 2;
