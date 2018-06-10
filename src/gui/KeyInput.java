@@ -1,21 +1,27 @@
+package gui;
+
+import main.Dungeon;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class KeyInput extends KeyAdapter{
+public class KeyInput extends KeyAdapter {
     private Dungeon dun;
     private boolean shiftPressed;
-    public KeyInput(Dungeon d){
-        dun=d;
+
+    public KeyInput(Dungeon d) {
+        dun = d;
     }
 
-    private String shoot(){
-        return shiftPressed ? "shoot":"";
+    private String shoot() {
+        return shiftPressed ? "shoot" : "";
     }
+
     public void keyPressed(KeyEvent e) {
-        int key=e.getKeyCode();
+        int key = e.getKeyCode();
 
-        if(key==KeyEvent.VK_SHIFT)
-            shiftPressed=true;
+        if (key == KeyEvent.VK_SHIFT)
+            shiftPressed = true;
 
         switch (key) {
             case KeyEvent.VK_W:
@@ -35,7 +41,7 @@ public class KeyInput extends KeyAdapter{
 
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();
-        if(key==KeyEvent.VK_SHIFT)
-            shiftPressed=false;
+        if (key == KeyEvent.VK_SHIFT)
+            shiftPressed = false;
     }
 }
