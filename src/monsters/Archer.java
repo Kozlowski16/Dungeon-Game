@@ -15,11 +15,11 @@ public class Archer extends Monster {
         if (posY == dun.getPlayer().posY) {
             int ArrowPos = posX;
             do {
-                if (ArrowPos > dun.getPlayer().posX && ArrowPos != dun.roomSize - 1)
+                if (ArrowPos > dun.getPlayer().posX && ArrowPos != 0)
                     ArrowPos--;
                 else if (ArrowPos != 0)
                     ArrowPos++;
-                if (dun.getRoom()[posY][ArrowPos] == ' ')
+                if (dun.getRoom()[posY][ArrowPos] == ' ')//erro
                     dun.getRoom()[posY][ArrowPos] = '-';
                 // Dungeon.printLevel(Dungeon.getRoom());
 
@@ -32,7 +32,7 @@ public class Archer extends Monster {
             int ArrowPos = posY;
             do {
 
-                if (ArrowPos > dun.getPlayer().posY && ArrowPos != dun.roomSize - 1)
+                if (ArrowPos > dun.getPlayer().posY && ArrowPos != 0)
                     ArrowPos--;
                 else if (ArrowPos != 0)
                     ArrowPos++;

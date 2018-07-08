@@ -14,11 +14,11 @@ import java.util.Random;
  */
 
 public class Dungeon {
-    public final int roomSize = 8;
+    public int roomSize = 8;
     private final DungeonGUI GUI;
     private final Monster_list monsters;
     private final Random rando = new Random();
-    private final int floorSize = 2;
+    private int floorSize = 2;
     public int floor = 1;
     public int killCount;
     private Player player;
@@ -28,12 +28,17 @@ public class Dungeon {
     private char[][][][] LevelList;
 
     public Dungeon() {
-        LevelList = new char[floorSize][floorSize][roomSize][roomSize];
         monsters = new Monster_list(this);
         player = new Player();
         GUI = new DungeonGUI(this);
         GUI.setVisible(true);
 
+    }
+    public void newGame(){
+        roomSize=GUI.getRoomSize();
+        floorSize = GUI.getFloorSize();
+        LevelList = new char[floorSize][floorSize][roomSize][roomSize];
+        player.reset();
         levelPosX = floorSize / 2;
         levelPosY = floorSize / 2;
         player.posX = roomSize / 2;
@@ -51,29 +56,6 @@ public class Dungeon {
 
     public static void main(String[] args) {
         new Dungeon();
-        new Dungeon();
-        new Dungeon();
-    }
-
-    private void reset() {
-        GUI.setMenu();
-        player.reset();
-
-        levelPosX = floorSize / 2;
-        levelPosY = floorSize / 2;
-        player.posX = roomSize / 2;
-        player.posY = roomSize / 2;
-        player.posX_Old = player.posX;
-        player.posY_Old = player.posY;
-
-        floor = 1;
-        generateFloor();
-        getRoom()[player.posY][player.posX] = '@';
-
-        printFloor();
-
-        //prints room
-        printLevel(getRoom());
     }
 
     private void end() {
@@ -83,7 +65,7 @@ public class Dungeon {
         System.out.println("monsters killed: " + killCount + ", Floor: " + floor + " Score: " + score);
         System.out.println("Thanks for playing");
         //System.exit(0);
-        reset();
+        GUI.setMenu();
     }
 
     public void printLevel(char[][] a) {
@@ -132,6 +114,7 @@ public class Dungeon {
             for (int b = 0; b < floorSize; b++)
                 for (int c = 0; c < roomSize; c++)
                     Arrays.fill(LevelList[a][b][c], ' ');
+
 
         //determines if there should be 1 or 2 wide doors
         int door2;

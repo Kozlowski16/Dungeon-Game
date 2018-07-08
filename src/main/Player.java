@@ -13,7 +13,7 @@ public class Player {
     public int posY_Old;
 
     public Player() {
-        maxHP = 100;
+        maxHP = 1000;
         HP = maxHP;
         armor = 0;
         attack = 1000;
