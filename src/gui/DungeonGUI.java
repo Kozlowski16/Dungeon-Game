@@ -59,7 +59,7 @@ public class DungeonGUI extends JFrame {
         ///////////////////////////
         add(menu);
 
-        map = new JLabel("<html><p style=\"font-family:'Lucida Console', monospace\">Hello&nbsp;World! <br/>wwwwwwwwwwww</p></html>");
+        map = new JLabel("<html><p style=\"font-family:'Lucida Console', monospace\">Hello&nbsp;World! <br/>Error Failed to get data</p></html>");
         map.setBounds(0, 0, 400, 500);
 
         setSize(400, 500);

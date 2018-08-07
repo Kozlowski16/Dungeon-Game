@@ -10,7 +10,6 @@ public abstract class Monster {
     protected int armor;
     protected int posY;
     protected int posX;
-    protected int old_posY, old_posX;
     protected char looks;
     Dungeon dun;
     Random rando = new Random();
@@ -18,35 +17,33 @@ public abstract class Monster {
     public Monster(int x, int y, Dungeon d) {
         dun = d;
 
-        Attack = (int) (4 + dun.floor * 1.1);
-        HP = (int) ((8 + Math.pow(dun.floor, 1.4)) * 2);
+        Attack = (int) (4 + dun.getFloorNumber() * 1.1);
+        HP = (int) ((8 + Math.pow(dun.getFloorNumber(), 1.4)) * 2);
         posX = x;
         posY = y;
-        old_posY = posY;
-        old_posX = posX;
         armor = 1;
     }
 
     protected void moveX() {
-        if (dun.getPlayer().posX < posX)
+        if (dun.getPlayer().getX() < posX)
             posX--;
         else
             posX++;
     }
 
     protected void moveY() {
-        if (dun.getPlayer().posY < posY)
+        if (dun.getPlayer().getY() < posY)
             posY--;
         else
             posY++;
     }
 
     protected void move() {
-        old_posY = posY;
-        old_posX = posX;
-        dun.getRoom()[posY][posX] = ' ';
+        int old_posY = posY;
+        int old_posX = posX;
+        dun.getMap()[posY][posX] = ' ';
         //if both x and y are different
-        if (dun.getPlayer().posX != posX && dun.getPlayer().posY != posY) {
+        if (dun.getPlayer().getX() != posX && dun.getPlayer().getY() != posY) {
             //rolls to see if x or y changes and changes it
             if (rando.nextInt(2) == 1)
                 moveX();
@@ -54,17 +51,17 @@ public abstract class Monster {
                 moveY();
         }
         // if x values are equal but not y
-        else if (dun.getPlayer().posX == posX && dun.getPlayer().posY != posY) {
+        else if (dun.getPlayer().getX() == posX && dun.getPlayer().getY() != posY) {
             moveY();
-        } else if (dun.getPlayer().posX != posX && dun.getPlayer().posY == posY) {
+        } else if (dun.getPlayer().getX() != posX && dun.getPlayer().getY() == posY) {
             moveX();
         }
 
-        if (posX < 0 || posX >= dun.roomSize || posY < 0 || posY >= dun.roomSize || dun.getRoom()[posY][posX] != ' ') {
+        if (dun.getMap()[posY][posX] != ' ') {
             posY = old_posY;
             posX = old_posX;
         }
-        dun.getRoom()[posY][posX] = looks;
+        dun.getMap()[posY][posX] = looks;
 
     }
 

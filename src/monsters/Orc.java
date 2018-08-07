@@ -11,11 +11,11 @@ public class Orc extends Monster {
 
     @Override
     public void attack() {
-        if (dun.getPlayer().posX + 1 == posX || dun.getPlayer().posX - 1 == posX)
-            if (dun.getPlayer().posY == posY)
+        if (dun.getPlayer().getX() + 1 == posX || dun.getPlayer().getX() - 1 == posX)
+            if (dun.getPlayer().getY() == posY)
                 dun.getPlayer().HP -= Attack - rando.nextInt(dun.getPlayer().armor + 1);
-        if (dun.getPlayer().posY + 1 == posY || dun.getPlayer().posY - 1 == posY)
-            if (dun.getPlayer().posX == posX)
+        if (dun.getPlayer().getY() + 1 == posY || dun.getPlayer().getY() - 1 == posY)
+            if (dun.getPlayer().getX() == posX)
                 dun.getPlayer().HP = dun.getPlayer().HP - Attack + rando.nextInt(dun.getPlayer().armor + 1);
     }
 

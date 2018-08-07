@@ -25,16 +25,16 @@ public class KeyInput extends KeyAdapter {
 
         switch (key) {
             case KeyEvent.VK_W:
-                dun.userAction(shoot() + "w");
+                dun.userAction2(shoot() + "w");
                 break;
             case KeyEvent.VK_A:
-                dun.userAction(shoot() + "a");
+                dun.userAction2(shoot() + "a");
                 break;
             case KeyEvent.VK_S:
-                dun.userAction(shoot() + "s");
+                dun.userAction2(shoot() + "s");
                 break;
             case KeyEvent.VK_D:
-                dun.userAction(shoot() + "d");
+                dun.userAction2(shoot() + "d");
                 break;
         }
     }

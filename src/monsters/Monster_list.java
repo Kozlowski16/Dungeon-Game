@@ -42,7 +42,7 @@ public class Monster_list {
             if (tempMonster.getX() == Xpos && tempMonster.getY() == Ypos) {
                 tempMonster.takeDamage(dun.getPlayer().attack);
                 if (tempMonster.HP <= 0) {
-                    dun.getRoom()[tempMonster.getY()][tempMonster.getX()] = ' ';
+                    dun.getMap()[tempMonster.getY()][tempMonster.getX()] = ' ';
                     monsters.remove(i);
                     dun.killCount++;
                     System.out.println("monsters.Monster died");

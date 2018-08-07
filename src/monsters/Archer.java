@@ -12,43 +12,45 @@ public class Archer extends Monster {
 
     @Override
     public void attack() {
-        if (posY == dun.getPlayer().posY) {
+        if (posY == dun.getPlayer().getY()) {
             int ArrowPos = posX;
             do {
-                if (ArrowPos > dun.getPlayer().posX && ArrowPos != 0)
+                if (ArrowPos > dun.getPlayer().getX() && ArrowPos != 0)
                     ArrowPos--;
                 else if (ArrowPos != 0)
                     ArrowPos++;
-                if (dun.getRoom()[posY][ArrowPos] == ' ')//erro
-                    dun.getRoom()[posY][ArrowPos] = '-';
-                // Dungeon.printLevel(Dungeon.getRoom());
+                if (dun.getMap()[posY][ArrowPos] == ' ')//erro
+                    dun.getMap()[posY][ArrowPos] = '-';
+                // Dungeon.printLevel(Dungeon.getMap());
 
             }
-            while (dun.getRoom()[dun.getPlayer().posY][ArrowPos] == '-' && ArrowPos != dun.roomSize - 1 && ArrowPos != 0);
-            if (dun.getRoom()[dun.getPlayer().posY][ArrowPos] == '@')
+            while (dun.getMap()[dun.getPlayer().getY()][ArrowPos] == '-' && ArrowPos != 0);
+            if (dun.getMap()[dun.getPlayer().getY()][ArrowPos] == '@')
                 dun.getPlayer().HP = dun.getPlayer().HP - Attack + dun.getPlayer().armor;
             hasShot = true;
-        } else if (posX == dun.getPlayer().posX) {
+        } else if (posX == dun.getPlayer().getX()) {
             int ArrowPos = posY;
             do {
 
-                if (ArrowPos > dun.getPlayer().posY && ArrowPos != 0)
+                if (ArrowPos > dun.getPlayer().getY() && ArrowPos != 0)
                     ArrowPos--;
                 else if (ArrowPos != 0)
                     ArrowPos++;
-                if (dun.getRoom()[ArrowPos][posX] == ' ')
-                    dun.getRoom()[ArrowPos][posX] = '|';
-                //Dungeon.printLevel(Dungeon.getRoom());
+                if (dun.getMap()[ArrowPos][posX] == ' ')
+                    dun.getMap()[ArrowPos][posX] = '|';
+                //Dungeon.printLevel(Dungeon.getMap());
 
-            } while (dun.getRoom()[ArrowPos][posX] == '|' && ArrowPos != dun.roomSize - 1 && ArrowPos != 0);
-            if (dun.getRoom()[ArrowPos][posX] == '@')
+            } while (dun.getMap()[ArrowPos][posX] == '|' && ArrowPos != 0);
+            if (dun.getMap()[ArrowPos][posX] == '@')
                 dun.getPlayer().HP = dun.getPlayer().HP - Attack + dun.getPlayer().armor;
             hasShot = true;
         }
+        /*
         for (int a = 0; a < dun.roomSize; a++)
             for (int b = 0; b < dun.roomSize; b++)
-                if (dun.getRoom()[a][b] == '-' || dun.getRoom()[a][b] == '|')
-                    dun.getRoom()[a][b] = ' ';
+                if (dun.getMap()[a][b] == '-' || dun.getMap()[a][b] == '|')
+                    dun.getMap()[a][b] = ' ';
+                    */
     }
 
     public void action() {
