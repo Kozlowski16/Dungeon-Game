@@ -1,2 +1,2 @@
 # main.Dungeon-Game
-This version Featuures a Totally new map generation buthas n ot yet implemented many things shuch as the monsters
+This version features a totally new map generation but has not yet implemented many things shuch as the monsters.
